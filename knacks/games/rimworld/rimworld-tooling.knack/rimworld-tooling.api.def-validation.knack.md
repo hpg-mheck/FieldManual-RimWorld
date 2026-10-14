@@ -6,7 +6,7 @@ building or extending a validator that checks a mod's `Defs/` and
 `Patches/` against the game's real types, without launching the game.
 The general technique, validating a plugin's data files against a closed
 host's types, is in FieldManual
-`knacks/dotnet/closed-assembly-inspection.knack/`; this companion gives
+`knacks/dotnet/assembly-inspection.knack/`; this companion gives
 RimWorld's loader rules and shapes.
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
@@ -118,7 +118,7 @@ failed the validator [observed].
 - The PowerShell traps (`.LocalName` versus `.Name`, partial type loads
   on Windows PowerShell 5.1) are in the
   [tooling overview](rimworld-tooling.overview.knack.md) and the stock
-  closed-assembly-inspection knack.
+  assembly-inspection knack.
 - Report a missing class as fatal: it drops the whole def in game (see
   [Defs and XML](../rimworld-modding.knack/rimworld-modding.api.defs-and-xml.knack.md)).
 - Print each problem with a path from the def down to the element, such
@@ -147,5 +147,5 @@ failed the validator [observed].
   <https://learn.microsoft.com/en-us/dotnet/api/system.reflection.reflectiontypeloadexception>
 - [RimWorld Defs and XML](../rimworld-modding.knack/rimworld-modding.api.defs-and-xml.knack.md)
   for the loader rules being mirrored
-- FieldManual `knacks/dotnet/closed-assembly-inspection.knack/`, for
+- FieldManual `knacks/dotnet/assembly-inspection.knack/`, for
   validating data files against host types in general

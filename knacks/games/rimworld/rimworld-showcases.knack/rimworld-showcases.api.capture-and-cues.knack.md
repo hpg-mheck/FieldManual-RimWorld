@@ -8,9 +8,9 @@ launching a showcase for a viewer, timing it, or capturing it for review.
 when the planned showcase API (a main-menu Showcases button listing mods,
 their showcases, and details, with warnings about flagged mods) exists.
 Window placement, DPI awareness, readiness markers, and window capture on
-Windows are in FieldManual `knacks/windows/desktop-automation.knack/`;
+Windows are in FieldManual `knacks/windows/desktop.knack/`;
 cue and capture practice in general is in
-`knacks/software-engineering/demonstrations/directed-showcases.knack/`.
+`knacks/software-engineering/demonstrations/showcases.knack/`.
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
@@ -46,7 +46,7 @@ RimWorld applies its saved resolution during startup, which undoes a
 window maximized too early. Wait for the showcase's `READY` cue in the
 log, then maximize [observed], for example with `ShowWindowAsync` and
 `SW_MAXIMIZE` on the game process's main window, as the Win32 companion
-of FieldManual `knacks/windows/desktop-automation.knack/` shows, and
+of FieldManual `knacks/windows/desktop.knack/` shows, and
 verify the result.
 
 ## Log Cues
@@ -82,7 +82,7 @@ time, so speed changes and slowdowns keep the sequence intact.
 ## Capturing
 
 - Capture the game window at each cue, with a tool that tails the log;
-  the stock desktop-automation knack covers window capture itself.
+  the stock Windows desktop knack covers window capture itself.
 - For animation, capture a burst of frames, crop the area of interest,
   scale it up without smoothing, and tile the frames into one contact
   sheet; one image then shows a pulse, a spin, or a flip [observed].
@@ -111,5 +111,5 @@ time, so speed changes and slowdowns keep the sequence intact.
 - Unity 2022.3 manual, Player command-line arguments:
   <https://docs.unity3d.com/2022.3/Documentation/Manual/PlayerCommandLineArguments.html>
 - [Showcase Staging](rimworld-showcases.api.staging.knack.md)
-- FieldManual `knacks/windows/desktop-automation.knack/` and
-  `knacks/software-engineering/demonstrations/directed-showcases.knack/`
+- FieldManual `knacks/windows/desktop.knack/` and
+  `knacks/software-engineering/demonstrations/showcases.knack/`

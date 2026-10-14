@@ -7,7 +7,7 @@ the game starts with a flag, builds scenarios on a quick-test map, drives
 real ticks, checks results, and logs a verdict. The general design (the
 log protocol, simulated time, scenario hygiene, error attribution) is in
 FieldManual
-`knacks/software-engineering/testing/in-host-smoke-testing.knack/`; this
+`knacks/software-engineering/testing/in-host-smoke.knack/`; this
 companion gives RimWorld's version of each part.
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
@@ -217,5 +217,5 @@ points, fires nearby), make a fresh one, and continue. A single
 - [Launch Harness](rimworld-testing.api.launch-harness.knack.md) for the
   script side
 - FieldManual
-  `knacks/software-engineering/testing/in-host-smoke-testing.knack/`,
+  `knacks/software-engineering/testing/in-host-smoke.knack/`,
   especially its runner and flakiness companions

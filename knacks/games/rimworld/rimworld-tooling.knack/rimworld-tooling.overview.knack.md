@@ -6,11 +6,11 @@ It covers compiling against the game, decompiling it, querying it by
 reflection, and finding vanilla assets.
 
 The general techniques are in FieldManual's stock knacks:
-`knacks/dotnet/net-framework-builds.knack/` (host references, MSBuild),
+`knacks/dotnet/framework-builds.knack/` (host references, MSBuild),
 `knacks/dotnet/visual-studio.knack/` (solutions, trusting only builds you
-saw succeed), `knacks/dotnet/closed-assembly-inspection.knack/` (licence,
+saw succeed), `knacks/dotnet/assembly-inspection.knack/` (licence,
 `ilspycmd`, reflection from PowerShell, validating data files),
-`knacks/windows/agent-shells.knack/` (PowerShell and Git Bash
+`knacks/windows/shells.knack/` (PowerShell and Git Bash
 differences), and `knacks/games/steam.knack/` (Workshop uploads). This
 knack keeps what is particular to RimWorld.
 
@@ -52,7 +52,7 @@ reference the game's managed assemblies without copying them:
 </Target>
 ```
 
-FieldManual `knacks/dotnet/net-framework-builds.knack/` explains the
+FieldManual `knacks/dotnet/framework-builds.knack/` explains the
 environment variable, the guard target, `Private=false`, and linking
 non-code content; pin `LangVersion` to a number as its .NET Standard
 sibling advises. What RimWorld adds:
@@ -126,7 +126,7 @@ that version, not a contract.
 ### Decompiling
 
 Install `ilspycmd` pinned, in an ignored folder of the project, as
-FieldManual `knacks/dotnet/closed-assembly-inspection.knack/` describes;
+FieldManual `knacks/dotnet/assembly-inspection.knack/` describes;
 the newest release failed to install on a .NET 9 SDK, and 9.1.0.7988
 worked [observed]. For RimWorld:
 
@@ -162,7 +162,7 @@ On 1.6.4871, Windows PowerShell 5.1 threw `ReflectionTypeLoadException`
 from `GetTypes()` for a few dozen types, while PowerShell 7 loaded them
 all; catch the exception and use its `Types` property, skipping nulls
 [observed]. `GetType(name)` works in both. FieldManual
-`knacks/dotnet/closed-assembly-inspection.knack/` (its PowerShell
+`knacks/dotnet/assembly-inspection.knack/` (its PowerShell
 reflection companion) covers the general technique and its traps, among
 them `.Name` returning a def's `Name="..."` attribute instead of the
 element name; use `.LocalName`.
@@ -206,7 +206,7 @@ element name; use `.LocalName`.
   <https://www.nuget.org/packages/ilspycmd/>
 - `Krafs.Rimworld.Ref` on NuGet: <https://www.nuget.org/packages/Krafs.Rimworld.Ref>
 - Ludeon Studios, `EULA.txt` in the install root: the "Mods" section
-- FieldManual `knacks/dotnet/net-framework-builds.knack/`,
+- FieldManual `knacks/dotnet/framework-builds.knack/`,
   `knacks/dotnet/visual-studio.knack/`,
-  `knacks/dotnet/closed-assembly-inspection.knack/`, and
+  `knacks/dotnet/assembly-inspection.knack/`, and
   `knacks/games/steam.knack/`

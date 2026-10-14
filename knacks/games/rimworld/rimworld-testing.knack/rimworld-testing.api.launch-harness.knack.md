@@ -8,7 +8,7 @@ verdict and an exit code.
 
 The launcher's general duties (preflight, isolation, configuration,
 installing the plugin, waiting, scraping, artifacts) are in FieldManual
-`knacks/software-engineering/testing/in-host-smoke-testing.knack/`
+`knacks/software-engineering/testing/in-host-smoke.knack/`
 (launcher companion). Steam's side, such as libraries, direct launches,
 cloud sync, and the player's own instance, is in FieldManual
 `knacks/games/steam.knack/`, and links and process ownership on Windows
@@ -218,6 +218,6 @@ the search before skipping [observed].
 - Each DLC's `Data/<DLC>/About/About.xml` (`forceLoadAfter`) for the
   release order
 - FieldManual
-  `knacks/software-engineering/testing/in-host-smoke-testing.knack/`
+  `knacks/software-engineering/testing/in-host-smoke.knack/`
   (launcher and flakiness companions), `knacks/games/steam.knack/`, and
   `knacks/windows/processes-and-files.knack/`

@@ -7,9 +7,9 @@ automated in-game run.
 
 This fileset maps general practice onto RimWorld. Load the general
 knacks for the pattern itself: FieldManual
-`knacks/software-engineering/testing/in-host-smoke-testing.knack/` (the
+`knacks/software-engineering/testing/in-host-smoke.knack/` (the
 layers, the in-host runner, the launcher, flake control) and
-`knacks/AI/agent-orchestration/proving-checks-can-fail.knack/` (sabotage
+`knacks/software-engineering/testing/proving-checks.knack/` (sabotage
 runs and vacuous checks).
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
@@ -84,7 +84,7 @@ here than in most hosts.
 
 Before trusting a new in-game check, see it fail against code that breaks
 the behavior, as FieldManual
-`knacks/AI/agent-orchestration/proving-checks-can-fail.knack/` describes.
+`knacks/software-engineering/testing/proving-checks.knack/` describes.
 In RimWorld runs, sabotage found these vacuous passes [observed]:
 
 - a fixture destroyed by an earlier destructive test, accepted by a null
@@ -145,7 +145,7 @@ realistic mod list as well as with vanilla and the DLCs.
   and [Finding Exceptions](https://rimworldwiki.com/wiki/Modding_Tutorials/Troubleshooting/Finding_Exceptions)
 - RimWorld Wiki, [ConfigErrors](https://rimworldwiki.com/wiki/Modding_Tutorials/ConfigErrors)
 - FieldManual
-  `knacks/software-engineering/testing/in-host-smoke-testing.knack/` and
-  `knacks/AI/agent-orchestration/proving-checks-can-fail.knack/`, in a
+  `knacks/software-engineering/testing/in-host-smoke.knack/` and
+  `knacks/software-engineering/testing/proving-checks.knack/`, in a
   FieldManual checkout:
   <https://github.com/Hard-Problems-Group-LLC/FieldManual>

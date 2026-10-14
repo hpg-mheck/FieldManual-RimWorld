@@ -15,7 +15,7 @@ then, treat what follows as the way to build one by hand.
 
 General showcase practice (the director, staging, viewing settings,
 capture, and the shape of a showcase framework) is in FieldManual
-`knacks/software-engineering/demonstrations/directed-showcases.knack/`.
+`knacks/software-engineering/demonstrations/showcases.knack/`.
 This fileset covers what RimWorld adds.
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
@@ -121,7 +121,7 @@ screen. RimWorld's forms of them:
 - [Smoke Runner](../rimworld-testing.knack/rimworld-testing.api.smoke-runner.knack.md)
   and [Launch Harness](../rimworld-testing.knack/rimworld-testing.api.launch-harness.knack.md)
 - FieldManual
-  `knacks/software-engineering/demonstrations/directed-showcases.knack/`,
+  `knacks/software-engineering/demonstrations/showcases.knack/`,
   including its framework companion, which outlines the menu-driven
   shape the planned API takes
 - [RimWorld modding overview](../rimworld-modding.knack/rimworld-modding.overview.knack.md),

@@ -157,7 +157,7 @@ modules you use from `RimWorldWin64_Data/Managed` in the install with
 `Private=false`, and build into `Assemblies/`. Never hard-code the install
 location: read it from an environment variable such as `RIMWORLD_DIR`, and
 fail the build with a clear message when it is unset. FieldManual
-`knacks/dotnet/net-framework-builds.knack/` explains the general pattern;
+`knacks/dotnet/framework-builds.knack/` explains the general pattern;
 the
 [tooling overview](../rimworld-tooling.knack/rimworld-tooling.overview.knack.md)
 has a RimWorld project template.

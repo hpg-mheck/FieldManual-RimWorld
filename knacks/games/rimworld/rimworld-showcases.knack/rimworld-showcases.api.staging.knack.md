@@ -9,7 +9,7 @@ it needs, who must be kept safe, and what the camera and messages show.
 when the planned showcase API (a main-menu Showcases button listing mods,
 their showcases, and details, with warnings about flagged mods) exists.
 The general staging rules are in the staging companion of FieldManual
-`knacks/software-engineering/demonstrations/directed-showcases.knack/`;
+`knacks/software-engineering/demonstrations/showcases.knack/`;
 this companion gives RimWorld's calls and pitfalls.
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
@@ -134,5 +134,5 @@ for the engine rules behind these.
   for hidden neutral factions and calm scripted pawns
 - RimWorld Wiki, [DebugActions](https://rimworldwiki.com/wiki/Modding_Tutorials/DebugActions)
 - FieldManual
-  `knacks/software-engineering/demonstrations/directed-showcases.knack/`
+  `knacks/software-engineering/demonstrations/showcases.knack/`
   (staging companion)

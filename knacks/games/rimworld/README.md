@@ -81,10 +81,10 @@ FieldManual checkout, written as FieldManual `knacks/<path>`:
 
 | Fileset | Stock knacks |
 |---|---|
-| Modding | `knacks/dotnet/net-framework-builds.knack/` |
-| Testing | `knacks/software-engineering/testing/in-host-smoke-testing.knack/`, `knacks/AI/agent-orchestration/proving-checks-can-fail.knack/`, `knacks/dotnet/netstandard-shared-library.knack/`, `knacks/games/steam.knack/`, `knacks/windows/processes-and-files.knack/` |
-| Tooling | `knacks/dotnet/net-framework-builds.knack/`, `knacks/dotnet/visual-studio.knack/`, `knacks/dotnet/closed-assembly-inspection.knack/`, `knacks/windows/agent-shells.knack/`, `knacks/games/steam.knack/` |
-| Showcases | `knacks/software-engineering/demonstrations/directed-showcases.knack/`, `knacks/windows/desktop-automation.knack/` |
+| Modding | `knacks/dotnet/framework-builds.knack/` |
+| Testing | `knacks/software-engineering/testing/in-host-smoke.knack/`, `knacks/software-engineering/testing/proving-checks.knack/`, `knacks/dotnet/shared-library.knack/`, `knacks/games/steam.knack/`, `knacks/windows/processes-and-files.knack/` |
+| Tooling | `knacks/dotnet/framework-builds.knack/`, `knacks/dotnet/visual-studio.knack/`, `knacks/dotnet/assembly-inspection.knack/`, `knacks/windows/shells.knack/`, `knacks/games/steam.knack/` |
+| Showcases | `knacks/software-engineering/demonstrations/showcases.knack/`, `knacks/windows/desktop.knack/` |
 
 ## Load Order
 
