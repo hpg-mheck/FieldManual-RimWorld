@@ -1,7 +1,7 @@
 # RimWorld Lifecycle and Ticking
 
 Load this companion after the
-[RimWorld modding overview](rimworld-modding.overview.knack.md) when writing
+[RimWorld modding overview](overview.knack.md) when writing
 a `Thing`, `ThingComp`, `MapComponent`, or `GameComponent` subclass, saving
 state, or holding textures and materials in C#.
 

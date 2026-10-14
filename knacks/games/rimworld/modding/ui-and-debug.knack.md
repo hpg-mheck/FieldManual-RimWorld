@@ -1,7 +1,7 @@
 # RimWorld UI and Debug
 
 Load this companion after the
-[RimWorld modding overview](rimworld-modding.overview.knack.md) when adding
+[RimWorld modding overview](overview.knack.md) when adding
 buttons (gizmos), inspect-pane text, messages, labels or overlays on the
 map, or developer tools.
 
@@ -62,7 +62,7 @@ public override IEnumerable<Gizmo> CompGetGizmosExtra()
 - `Gizmo_Slider` is the vanilla slider base. Subclass it and implement
   `Target`, `ValuePercent`, `Title`, `DraggingBar`, and `GetTooltip`.
 - Find vanilla icon paths in the game's asset index (see the
-  [tooling overview](../rimworld-tooling.knack/rimworld-tooling.overview.knack.md))
+  [tooling overview](../tooling/overview.knack.md))
   instead of guessing them, and load icons in a
   `[StaticConstructorOnStartup]` class.
 
@@ -75,7 +75,7 @@ without a trailing newline. Use the pane for state the player cannot see
 otherwise: a mode, a distance, a countdown.
 
 Job report strings (the status under a pawn's name) are lowercase and end
-with a full stop; see [Pawns and AI](rimworld-modding.api.pawns-and-ai.knack.md).
+with a full stop; see [Pawns and AI](pawns-and-ai.knack.md).
 
 ## Messages and Letters
 

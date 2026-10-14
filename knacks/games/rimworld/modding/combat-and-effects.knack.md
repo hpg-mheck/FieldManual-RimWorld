@@ -1,7 +1,7 @@
 # RimWorld Combat and Effects
 
 Load this companion after the
-[RimWorld modding overview](rimworld-modding.overview.knack.md) when code
+[RimWorld modding overview](overview.knack.md) when code
 makes explosions, starts fires, launches projectiles, reacts to damage, or
 works with long ranges and large radii.
 

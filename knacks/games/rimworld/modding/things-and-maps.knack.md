@@ -1,10 +1,10 @@
 # RimWorld Things and Maps
 
 Load this companion after the
-[RimWorld modding overview](rimworld-modding.overview.knack.md) when code
+[RimWorld modding overview](overview.knack.md) when code
 creates, moves, or removes things, changes terrain or roofs, or clears and
 builds ground from code. Power, ownership, doors, zones, and storage are in
-[Buildings and Storage](rimworld-modding.api.buildings-and-storage.knack.md).
+[Buildings and Storage](buildings-and-storage.knack.md).
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from

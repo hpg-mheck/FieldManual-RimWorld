@@ -9,62 +9,62 @@ do not describe 1.5 or earlier, and the 1.7 beta was not reviewed.
 
 ## Modding
 
-- [Overview](rimworld-modding.knack/rimworld-modding.overview.knack.md) —
+- [Overview](modding/overview.knack.md) —
   mod layout, identity and load order, defs and DefOfs, patches before
   Harmony, DLC-optional content, building, and verifying APIs
-- [Defs and XML](rimworld-modding.knack/rimworld-modding.api.defs-and-xml.knack.md)
+- [Defs and XML](modding/defs-and-xml.knack.md)
   — the loader's order, fields, inheritance, `Class=`, configuration
   errors, mod extensions, translation, patches
-- [Lifecycle and Ticking](rimworld-modding.knack/rimworld-modding.api.lifecycle-and-ticking.knack.md)
+- [Lifecycle and Ticking](modding/lifecycle-and-ticking.knack.md)
   — ticker types and the 1.6 variable tick rate, comps, held things,
   components, static assets, saving, randomness
-- [Things and Maps](rimworld-modding.knack/rimworld-modding.api.things-and-maps.knack.md)
+- [Things and Maps](modding/things-and-maps.knack.md)
   — making and spawning things, footprints, indestructible things,
   clearing ground, roofs, terrain
-- [Buildings and Storage](rimworld-modding.knack/rimworld-modding.api.buildings-and-storage.knack.md)
+- [Buildings and Storage](modding/buildings-and-storage.knack.md)
   — power, ownership side effects, doors and forbidding, zones and
   stockpiles, storage buildings, autonomous bills
-- [Pawns and AI](rimworld-modding.knack/rimworld-modding.api.pawns-and-ai.knack.md)
+- [Pawns and AI](modding/pawns-and-ai.knack.md)
   — main and constant think trees, job givers, lords and duties, fleeing
-- [Pawn Generation and Factions](rimworld-modding.knack/rimworld-modding.api.pawn-generation-and-factions.knack.md)
+- [Pawn Generation and Factions](modding/pawn-generation-and-factions.knack.md)
   — generation requests, pawn kinds, hidden factions, needs and breaks,
   custom races
-- [Combat and Effects](rimworld-modding.knack/rimworld-modding.api.combat-and-effects.knack.md)
+- [Combat and Effects](modding/combat-and-effects.knack.md)
   — explosions and fire, projectiles and launchers, forced misses, radial
   limits, damage hooks
-- [UI and Debug](rimworld-modding.knack/rimworld-modding.api.ui-and-debug.knack.md)
+- [UI and Debug](modding/ui-and-debug.knack.md)
   — gizmos, the inspect pane, messages, map drawing and GUI, debug actions
 
 ## Testing
 
-- [Overview](rimworld-testing.knack/rimworld-testing.overview.knack.md) —
+- [Overview](testing/overview.knack.md) —
   the layered strategy, proving checks can fail, the error policy
-- [Static Tests](rimworld-testing.knack/rimworld-testing.api.static-tests.knack.md)
+- [Static Tests](testing/static-tests.knack.md)
   — a RimWorld-free logic library, XML regression tests, tests against the
   game's own data
-- [Smoke Runner](rimworld-testing.knack/rimworld-testing.api.smoke-runner.knack.md)
+- [Smoke Runner](testing/smoke-runner.knack.md)
   — an in-game runner: synchronous ticking, checks, the log queue, staging,
   seams, lost fixtures
-- [Launch Harness](rimworld-testing.knack/rimworld-testing.api.launch-harness.knack.md)
+- [Launch Harness](testing/launch-harness.knack.md)
   — isolated launches, generated configuration, reading the verdict,
   random maps and flakes
 
 ## Tooling
 
-- [Overview](rimworld-tooling.knack/rimworld-tooling.overview.knack.md) —
+- [Overview](tooling/overview.knack.md) —
   building against the game, packaging and publishing, decompiling,
   reflection, finding vanilla assets
-- [Def Validation](rimworld-tooling.knack/rimworld-tooling.api.def-validation.knack.md)
+- [Def Validation](tooling/def-validation.knack.md)
   — a reflection-based stand-in for the XML loader, patches included
 
 ## Showcases
 
-- [Overview](rimworld-showcases.knack/rimworld-showcases.overview.knack.md)
+- [Overview](showcases/overview.knack.md)
   — a showcase mode of the runner, from timeline to directed tour
-- [Staging](rimworld-showcases.knack/rimworld-showcases.api.staging.knack.md)
+- [Staging](showcases/staging.knack.md)
   — seeds, sites and shared safety geometry, the cast, props, camera,
   commentary
-- [Capture and Cues](rimworld-showcases.knack/rimworld-showcases.api.capture-and-cues.knack.md)
+- [Capture and Cues](showcases/capture-and-cues.knack.md)
   — viewing preferences, maximizing, log cues, screen capture
 
 The showcase fileset documents the current hand-built approach: a showcase
@@ -81,10 +81,10 @@ FieldManual checkout, written as FieldManual `knacks/<path>`:
 
 | Fileset | Stock knacks |
 |---|---|
-| Modding | `knacks/dotnet/framework-builds.knack/` |
-| Testing | `knacks/software-engineering/testing/in-host-smoke.knack/`, `knacks/software-engineering/testing/proving-checks.knack/`, `knacks/dotnet/shared-library.knack/`, `knacks/games/steam.knack/`, `knacks/windows/processes-and-files.knack/` |
-| Tooling | `knacks/dotnet/framework-builds.knack/`, `knacks/dotnet/visual-studio.knack/`, `knacks/dotnet/assembly-inspection.knack/`, `knacks/windows/shells.knack/`, `knacks/games/steam.knack/` |
-| Showcases | `knacks/software-engineering/demonstrations/showcases.knack/`, `knacks/windows/desktop.knack/` |
+| Modding | `knacks/dotnet/framework-builds/` |
+| Testing | `knacks/software-engineering/testing/in-host-smoke/`, `knacks/software-engineering/testing/proving-checks/`, `knacks/dotnet/shared-library/`, `knacks/games/steam/`, `knacks/windows/processes-and-files/` |
+| Tooling | `knacks/dotnet/framework-builds/`, `knacks/dotnet/visual-studio/`, `knacks/dotnet/assembly-inspection/`, `knacks/windows/shells/`, `knacks/games/steam/` |
+| Showcases | `knacks/software-engineering/demonstrations/showcases/`, `knacks/windows/desktop-automation/` |
 
 ## Load Order
 

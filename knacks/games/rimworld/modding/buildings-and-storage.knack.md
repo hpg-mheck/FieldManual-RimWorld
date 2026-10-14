@@ -1,11 +1,11 @@
 # RimWorld Buildings and Storage
 
 Load this companion after the
-[RimWorld modding overview](rimworld-modding.overview.knack.md) when a
+[RimWorld modding overview](overview.knack.md) when a
 building draws or supplies power, belongs to a faction other than the
 player's, stores items, takes bills, or must not attract colonists,
 haulers, or raiders. Spawning and terrain are in
-[Things and Maps](rimworld-modding.api.things-and-maps.knack.md).
+[Things and Maps](things-and-maps.knack.md).
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
@@ -110,7 +110,7 @@ bookcase (`Building_Bookcase`):
   any mode but `WillReplace`, `Vanish` included [decomp]; to remove the
   contents too, destroy them first (`ClearAndDestroyContents`);
 - `ISuspendableThingHolder` freezes the contents (see
-  [Lifecycle and Ticking](rimworld-modding.api.lifecycle-and-ticking.knack.md));
+  [Lifecycle and Ticking](lifecycle-and-ticking.knack.md));
 - pawns' food search reads the map's lists of spawned things without
   looking inside haul sources, so food held in such a building is not
   eaten from there [decomp]; your own searches can pass

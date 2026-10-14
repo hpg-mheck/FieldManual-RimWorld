@@ -1,7 +1,7 @@
 # RimWorld Static Tests
 
 Load this companion after the
-[RimWorld testing overview](rimworld-testing.overview.knack.md) when
+[RimWorld testing overview](overview.knack.md) when
 setting up tests that run without launching the game: unit tests of mod
 logic and regression tests over the mod's XML and the game's own data.
 
@@ -27,7 +27,7 @@ Tests/
   BrassWorks.Tests/            test framework; references the core only
 ```
 
-FieldManual `knacks/dotnet/shared-library.knack/` covers the
+FieldManual `knacks/dotnet/shared-library/` covers the
 general pattern and the `netstandard2.0` language traps: the C# 7.3
 default, a pinned numeric `LangVersion`, `IsExternalInit` for records,
 and the missing index and range types. What RimWorld adds:
@@ -113,7 +113,7 @@ new DLC race shows up as a test failure.
 
 - Ludeon Studios, `ModUpdating.txt` in the install root (folder layout)
 - RimWorld Wiki, [Setting up a solution](https://rimworldwiki.com/wiki/Modding_Tutorials/Setting_up_a_solution)
-- FieldManual `knacks/dotnet/shared-library.knack/`, for the
+- FieldManual `knacks/dotnet/shared-library/`, for the
   split, the polyfills, and the language-version decision
 - Microsoft, .NET Standard versions and API coverage:
   <https://learn.microsoft.com/en-us/dotnet/standard/net-standard>

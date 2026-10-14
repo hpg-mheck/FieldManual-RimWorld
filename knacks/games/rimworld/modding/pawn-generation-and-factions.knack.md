@@ -1,11 +1,11 @@
 # RimWorld Pawn Generation and Factions
 
 Load this companion after the
-[RimWorld modding overview](rimworld-modding.overview.knack.md) when code
+[RimWorld modding overview](overview.knack.md) when code
 generates pawns, defines a pawn kind or a new race, places non-player pawns
 that must stay calm and harmless, or relies on faction relations. Think
 trees, lords, and fleeing are in
-[Pawns and AI](rimworld-modding.api.pawns-and-ai.knack.md).
+[Pawns and AI](pawns-and-ai.knack.md).
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from

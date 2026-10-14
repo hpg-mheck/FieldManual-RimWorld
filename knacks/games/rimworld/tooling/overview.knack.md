@@ -6,12 +6,12 @@ It covers compiling against the game, decompiling it, querying it by
 reflection, and finding vanilla assets.
 
 The general techniques are in FieldManual's stock knacks:
-`knacks/dotnet/framework-builds.knack/` (host references, MSBuild),
-`knacks/dotnet/visual-studio.knack/` (solutions, trusting only builds you
-saw succeed), `knacks/dotnet/assembly-inspection.knack/` (licence,
+`knacks/dotnet/framework-builds/` (host references, MSBuild),
+`knacks/dotnet/visual-studio/` (solutions, trusting only builds you
+saw succeed), `knacks/dotnet/assembly-inspection/` (licence,
 `ilspycmd`, reflection from PowerShell, validating data files),
-`knacks/windows/shells.knack/` (PowerShell and Git Bash
-differences), and `knacks/games/steam.knack/` (Workshop uploads). This
+`knacks/windows/shells/` (PowerShell and Git Bash
+differences), and `knacks/games/steam/` (Workshop uploads). This
 knack keeps what is particular to RimWorld.
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
@@ -21,7 +21,7 @@ published source.
 
 ## Companions
 
-- [Def Validation](rimworld-tooling.api.def-validation.knack.md) — a static
+- [Def Validation](def-validation.knack.md) — a static
   stand-in for the game's XML loader, built on reflection
 
 ## Building Against the Game
@@ -52,7 +52,7 @@ reference the game's managed assemblies without copying them:
 </Target>
 ```
 
-FieldManual `knacks/dotnet/framework-builds.knack/` explains the
+FieldManual `knacks/dotnet/framework-builds/` explains the
 environment variable, the guard target, `Private=false`, and linking
 non-code content; pin `LangVersion` to a number as its .NET Standard
 sibling advises. What RimWorld adds:
@@ -71,7 +71,7 @@ sibling advises. What RimWorld adds:
 
 A failed compile leaves the old DLL in `Assemblies/`, and every later test
 then runs old code [observed]; trust only builds you saw succeed (FieldManual
-`knacks/dotnet/visual-studio.knack/`).
+`knacks/dotnet/visual-studio/`).
 
 The game loads every `.dll` under a mod's `Assemblies/` folder,
 subfolders included. A DLL that fails to load stops the loading of that
@@ -94,7 +94,7 @@ Steam's `SetItemContent`; RimWorld's code applies no exclusions [decomp].
 Publishing from a development folder, or from a link to the repository,
 would therefore upload sources, `.git`, scratch folders, decompiled code,
 and logs, unless Steam filters them, which was not verified. Stage a
-clean copy as FieldManual `knacks/games/steam.knack/` (mods and Workshop
+clean copy as FieldManual `knacks/games/steam/` (mods and Workshop
 companion) describes, holding only what the game loads: `About/` (with
 `Preview.png`), `Assemblies/`, `Defs/`, `Patches/`, `Languages/`,
 `Sounds/`, `Textures/`, and any `LoadFolders.xml` folders. After the
@@ -126,7 +126,7 @@ that version, not a contract.
 ### Decompiling
 
 Install `ilspycmd` pinned, in an ignored folder of the project, as
-FieldManual `knacks/dotnet/assembly-inspection.knack/` describes;
+FieldManual `knacks/dotnet/assembly-inspection/` describes;
 the newest release failed to install on a .NET 9 SDK, and 9.1.0.7988
 worked [observed]. For RimWorld:
 
@@ -162,7 +162,7 @@ On 1.6.4871, Windows PowerShell 5.1 threw `ReflectionTypeLoadException`
 from `GetTypes()` for a few dozen types, while PowerShell 7 loaded them
 all; catch the exception and use its `Types` property, skipping nulls
 [observed]. `GetType(name)` works in both. FieldManual
-`knacks/dotnet/assembly-inspection.knack/` (its PowerShell
+`knacks/dotnet/assembly-inspection/` (its PowerShell
 reflection companion) covers the general technique and its traps, among
 them `.Name` returning a def's `Name="..."` attribute instead of the
 element name; use `.LocalName`.
@@ -206,7 +206,7 @@ element name; use `.LocalName`.
   <https://www.nuget.org/packages/ilspycmd/>
 - `Krafs.Rimworld.Ref` on NuGet: <https://www.nuget.org/packages/Krafs.Rimworld.Ref>
 - Ludeon Studios, `EULA.txt` in the install root: the "Mods" section
-- FieldManual `knacks/dotnet/framework-builds.knack/`,
-  `knacks/dotnet/visual-studio.knack/`,
-  `knacks/dotnet/assembly-inspection.knack/`, and
-  `knacks/games/steam.knack/`
+- FieldManual `knacks/dotnet/framework-builds/`,
+  `knacks/dotnet/visual-studio/`,
+  `knacks/dotnet/assembly-inspection/`, and
+  `knacks/games/steam/`

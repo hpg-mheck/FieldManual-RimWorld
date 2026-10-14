@@ -1,16 +1,16 @@
 # RimWorld Showcase Capture and Cues
 
 Load this companion after the
-[RimWorld showcases overview](rimworld-showcases.overview.knack.md) when
+[RimWorld showcases overview](overview.knack.md) when
 launching a showcase for a viewer, timing it, or capturing it for review.
 
 **Status.** This documents the current, hand-built approach; revise it
 when the planned showcase API (a main-menu Showcases button listing mods,
 their showcases, and details, with warnings about flagged mods) exists.
 Window placement, DPI awareness, readiness markers, and window capture on
-Windows are in FieldManual `knacks/windows/desktop.knack/`;
+Windows are in FieldManual `knacks/windows/desktop-automation/`;
 cue and capture practice in general is in
-`knacks/software-engineering/demonstrations/showcases.knack/`.
+`knacks/software-engineering/demonstrations/showcases/`.
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
@@ -19,7 +19,7 @@ traced to a published source.
 
 ## Launching for a Viewer
 
-Use the [launch harness](../rimworld-testing.knack/rimworld-testing.api.launch-harness.knack.md)
+Use the [launch harness](../testing/launch-harness.knack.md)
 with the showcase flag and preferences of its own. Unattended test runs
 stay small and muted; a run for a person gets:
 
@@ -46,7 +46,7 @@ RimWorld applies its saved resolution during startup, which undoes a
 window maximized too early. Wait for the showcase's `READY` cue in the
 log, then maximize [observed], for example with `ShowWindowAsync` and
 `SW_MAXIMIZE` on the game process's main window, as the Win32 companion
-of FieldManual `knacks/windows/desktop.knack/` shows, and
+of FieldManual `knacks/windows/desktop-automation/` shows, and
 verify the result.
 
 ## Log Cues
@@ -110,6 +110,6 @@ time, so speed changes and slowdowns keep the sequence intact.
   <https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-showwindowasync>
 - Unity 2022.3 manual, Player command-line arguments:
   <https://docs.unity3d.com/2022.3/Documentation/Manual/PlayerCommandLineArguments.html>
-- [Showcase Staging](rimworld-showcases.api.staging.knack.md)
-- FieldManual `knacks/windows/desktop.knack/` and
-  `knacks/software-engineering/demonstrations/showcases.knack/`
+- [Showcase Staging](staging.knack.md)
+- FieldManual `knacks/windows/desktop-automation/` and
+  `knacks/software-engineering/demonstrations/showcases/`

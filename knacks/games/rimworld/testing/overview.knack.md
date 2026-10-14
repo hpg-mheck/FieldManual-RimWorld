@@ -7,9 +7,9 @@ automated in-game run.
 
 This fileset maps general practice onto RimWorld. Load the general
 knacks for the pattern itself: FieldManual
-`knacks/software-engineering/testing/in-host-smoke.knack/` (the
+`knacks/software-engineering/testing/in-host-smoke/` (the
 layers, the in-host runner, the launcher, flake control) and
-`knacks/software-engineering/testing/proving-checks.knack/` (sabotage
+`knacks/software-engineering/testing/proving-checks/` (sabotage
 runs and vacuous checks).
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
@@ -19,17 +19,17 @@ traced to a published source.
 
 ## Companions
 
-- [Static Tests](rimworld-testing.api.static-tests.knack.md) — a
+- [Static Tests](static-tests.knack.md) — a
   RimWorld-free logic library, XML regression tests, and tests against the
   game's own data
-- [Smoke Runner](rimworld-testing.api.smoke-runner.knack.md) — an in-game
+- [Smoke Runner](smoke-runner.knack.md) — an in-game
   test runner: structure, synchronous ticking, checks, error capture,
   staging, and flake control
-- [Launch Harness](rimworld-testing.api.launch-harness.knack.md) — the
+- [Launch Harness](launch-harness.knack.md) — the
   script that starts the game isolated, waits, and reports
 
-Related: [def validation](../rimworld-tooling.knack/rimworld-tooling.api.def-validation.knack.md)
-in the tooling fileset, and [showcases](../rimworld-showcases.knack/rimworld-showcases.overview.knack.md),
+Related: [def validation](../tooling/def-validation.knack.md)
+in the tooling fileset, and [showcases](../showcases/overview.knack.md),
 which reuse the runner to stage demonstrations for a person.
 
 ## Mental Model
@@ -84,7 +84,7 @@ here than in most hosts.
 
 Before trusting a new in-game check, see it fail against code that breaks
 the behavior, as FieldManual
-`knacks/software-engineering/testing/proving-checks.knack/` describes.
+`knacks/software-engineering/testing/proving-checks/` describes.
 In RimWorld runs, sabotage found these vacuous passes [observed]:
 
 - a fixture destroyed by an earlier destructive test, accepted by a null
@@ -145,7 +145,7 @@ realistic mod list as well as with vanilla and the DLCs.
   and [Finding Exceptions](https://rimworldwiki.com/wiki/Modding_Tutorials/Troubleshooting/Finding_Exceptions)
 - RimWorld Wiki, [ConfigErrors](https://rimworldwiki.com/wiki/Modding_Tutorials/ConfigErrors)
 - FieldManual
-  `knacks/software-engineering/testing/in-host-smoke.knack/` and
-  `knacks/software-engineering/testing/proving-checks.knack/`, in a
+  `knacks/software-engineering/testing/in-host-smoke/` and
+  `knacks/software-engineering/testing/proving-checks/`, in a
   FieldManual checkout:
   <https://github.com/Hard-Problems-Group-LLC/FieldManual>

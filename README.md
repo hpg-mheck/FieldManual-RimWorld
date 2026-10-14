@@ -42,11 +42,11 @@ explains the evidence marks used throughout.
 The pack covers only what RimWorld adds. General practice lives in
 FieldManual's stock knacks, which these knacks cite by their path inside a
 FieldManual checkout, written as FieldManual `knacks/<path>`. The main
-ones are FieldManual `knacks/games/steam.knack/`, `knacks/dotnet/`,
+ones are FieldManual `knacks/games/steam/`, `knacks/dotnet/`,
 `knacks/windows/`,
-`knacks/software-engineering/testing/in-host-smoke.knack/`,
-`knacks/software-engineering/demonstrations/showcases.knack/`,
-and `knacks/software-engineering/testing/proving-checks.knack/`. The
+`knacks/software-engineering/testing/in-host-smoke/`,
+`knacks/software-engineering/demonstrations/showcases/`,
+and `knacks/software-engineering/testing/proving-checks/`. The
 [RimWorld index](knacks/games/rimworld/README.md) says which stock knack
 each fileset builds on. If a cited stock knack is missing from your
 checkout, update FieldManual.

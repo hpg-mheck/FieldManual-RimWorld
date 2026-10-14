@@ -1,12 +1,12 @@
 # RimWorld Def Validation
 
 Load this companion after the
-[RimWorld tooling overview](rimworld-tooling.overview.knack.md) when
+[RimWorld tooling overview](overview.knack.md) when
 building or extending a validator that checks a mod's `Defs/` and
 `Patches/` against the game's real types, without launching the game.
 The general technique, validating a plugin's data files against a closed
 host's types, is in FieldManual
-`knacks/dotnet/assembly-inspection.knack/`; this companion gives
+`knacks/dotnet/assembly-inspection/`; this companion gives
 RimWorld's loader rules and shapes.
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
@@ -117,10 +117,10 @@ failed the validator [observed].
 
 - The PowerShell traps (`.LocalName` versus `.Name`, partial type loads
   on Windows PowerShell 5.1) are in the
-  [tooling overview](rimworld-tooling.overview.knack.md) and the stock
+  [tooling overview](overview.knack.md) and the stock
   assembly-inspection knack.
 - Report a missing class as fatal: it drops the whole def in game (see
-  [Defs and XML](../rimworld-modding.knack/rimworld-modding.api.defs-and-xml.knack.md)).
+  [Defs and XML](../modding/defs-and-xml.knack.md)).
 - Print each problem with a path from the def down to the element, such
   as `BW_SteamPress/comps/li[CompProperties_PressureGauge]/<maxPresure>`
   (with the class's full name in practice), and a summary count last.
@@ -145,7 +145,7 @@ failed the validator [observed].
   <https://learn.microsoft.com/en-us/dotnet/api/system.type.getfield>
 - Microsoft, `ReflectionTypeLoadException`:
   <https://learn.microsoft.com/en-us/dotnet/api/system.reflection.reflectiontypeloadexception>
-- [RimWorld Defs and XML](../rimworld-modding.knack/rimworld-modding.api.defs-and-xml.knack.md)
+- [RimWorld Defs and XML](../modding/defs-and-xml.knack.md)
   for the loader rules being mirrored
-- FieldManual `knacks/dotnet/assembly-inspection.knack/`, for
+- FieldManual `knacks/dotnet/assembly-inspection/`, for
   validating data files against host types in general

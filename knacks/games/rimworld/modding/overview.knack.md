@@ -15,26 +15,26 @@ claims rest on the sources under Further Information or on the game's own
 
 ## Companions
 
-- [Defs and XML](rimworld-modding.api.defs-and-xml.knack.md) — inheritance,
+- [Defs and XML](defs-and-xml.knack.md) — inheritance,
   `Class=`, configuration errors, mod extensions, translation, patches
-- [Lifecycle and Ticking](rimworld-modding.api.lifecycle-and-ticking.knack.md)
+- [Lifecycle and Ticking](lifecycle-and-ticking.knack.md)
   — tick methods, comps, held things, components, static assets, saving
-- [Things and Maps](rimworld-modding.api.things-and-maps.knack.md) —
+- [Things and Maps](things-and-maps.knack.md) —
   spawning, footprints, indestructible things, clearing, roofs, terrain
-- [Buildings and Storage](rimworld-modding.api.buildings-and-storage.knack.md)
+- [Buildings and Storage](buildings-and-storage.knack.md)
   — power, ownership side effects, doors, zones, stockpiles, bills
-- [Pawns and AI](rimworld-modding.api.pawns-and-ai.knack.md) — think trees,
+- [Pawns and AI](pawns-and-ai.knack.md) — think trees,
   job givers, lords, duties, fleeing
-- [Pawn Generation and Factions](rimworld-modding.api.pawn-generation-and-factions.knack.md)
+- [Pawn Generation and Factions](pawn-generation-and-factions.knack.md)
   — generation requests, pawn kinds, factions, needs, breaks, custom races
-- [Combat and Effects](rimworld-modding.api.combat-and-effects.knack.md) —
+- [Combat and Effects](combat-and-effects.knack.md) —
   explosions, fire, projectiles, radial limits, damage hooks
-- [UI and Debug](rimworld-modding.api.ui-and-debug.knack.md) — gizmos, the
+- [UI and Debug](ui-and-debug.knack.md) — gizmos, the
   inspect pane, map GUI, debug actions, messages
 
 Verification and build setup live in the sibling
-[testing](../rimworld-testing.knack/rimworld-testing.overview.knack.md) and
-[tooling](../rimworld-tooling.knack/rimworld-tooling.overview.knack.md)
+[testing](../testing/overview.knack.md) and
+[tooling](../tooling/overview.knack.md)
 filesets.
 
 ## Mental Model
@@ -157,9 +157,9 @@ modules you use from `RimWorldWin64_Data/Managed` in the install with
 `Private=false`, and build into `Assemblies/`. Never hard-code the install
 location: read it from an environment variable such as `RIMWORLD_DIR`, and
 fail the build with a clear message when it is unset. FieldManual
-`knacks/dotnet/framework-builds.knack/` explains the general pattern;
+`knacks/dotnet/framework-builds/` explains the general pattern;
 the
-[tooling overview](../rimworld-tooling.knack/rimworld-tooling.overview.knack.md)
+[tooling overview](../tooling/overview.knack.md)
 has a RimWorld project template.
 
 ## Verify, Don't Guess

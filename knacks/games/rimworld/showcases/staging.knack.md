@@ -1,7 +1,7 @@
 # RimWorld Showcase Staging
 
 Load this companion after the
-[RimWorld showcases overview](rimworld-showcases.overview.knack.md) when
+[RimWorld showcases overview](overview.knack.md) when
 building the scene a showcase runs in: where each demonstration goes, what
 it needs, who must be kept safe, and what the camera and messages show.
 
@@ -9,7 +9,7 @@ it needs, who must be kept safe, and what the camera and messages show.
 when the planned showcase API (a main-menu Showcases button listing mods,
 their showcases, and details, with warnings about flagged mods) exists.
 The general staging rules are in the staging companion of FieldManual
-`knacks/software-engineering/demonstrations/showcases.knack/`;
+`knacks/software-engineering/demonstrations/showcases/`;
 this companion gives RimWorld's calls and pitfalls.
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
@@ -48,7 +48,7 @@ the center is (125, 125) [decomp].
 
 Every demonstration has a reach: its main radius, secondary blasts, fire
 spread, projectiles, and a margin. Budget the whole reach (see
-[Combat and Effects](../rimworld-modding.knack/rimworld-modding.api.combat-and-effects.knack.md)),
+[Combat and Effects](../modding/combat-and-effects.knack.md)),
 then keep demonstrations out of each other's reach and away from the
 scenery.
 
@@ -90,7 +90,7 @@ Scenery is part of a working colony and behaves like it [observed]:
 - **Joy furniture** that is powered attracts colonists. Leave it off.
 - **Player-owned devices** far from the base become raid targets.
 
-See [Buildings and Storage](../rimworld-modding.knack/rimworld-modding.api.buildings-and-storage.knack.md)
+See [Buildings and Storage](../modding/buildings-and-storage.knack.md)
 for the engine rules behind these.
 
 ## Camera and Selection
@@ -128,11 +128,11 @@ for the engine rules behind these.
 
 ## Further Information
 
-- [Things and Maps](../rimworld-modding.knack/rimworld-modding.api.things-and-maps.knack.md)
+- [Things and Maps](../modding/things-and-maps.knack.md)
   for clearing ground and indestructible things
-- [Pawn Generation and Factions](../rimworld-modding.knack/rimworld-modding.api.pawn-generation-and-factions.knack.md)
+- [Pawn Generation and Factions](../modding/pawn-generation-and-factions.knack.md)
   for hidden neutral factions and calm scripted pawns
 - RimWorld Wiki, [DebugActions](https://rimworldwiki.com/wiki/Modding_Tutorials/DebugActions)
 - FieldManual
-  `knacks/software-engineering/demonstrations/showcases.knack/`
+  `knacks/software-engineering/demonstrations/showcases/`
   (staging companion)

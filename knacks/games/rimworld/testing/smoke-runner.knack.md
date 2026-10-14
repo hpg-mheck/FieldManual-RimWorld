@@ -1,13 +1,13 @@
 # RimWorld Smoke Runner
 
 Load this companion after the
-[RimWorld testing overview](rimworld-testing.overview.knack.md) when
+[RimWorld testing overview](overview.knack.md) when
 building or extending an in-game test runner: code inside the mod that, when
 the game starts with a flag, builds scenarios on a quick-test map, drives
 real ticks, checks results, and logs a verdict. The general design (the
 log protocol, simulated time, scenario hygiene, error attribution) is in
 FieldManual
-`knacks/software-engineering/testing/in-host-smoke.knack/`; this
+`knacks/software-engineering/testing/in-host-smoke/`; this
 companion gives RimWorld's version of each part.
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
@@ -83,7 +83,7 @@ the engine does once per *frame* does not happen [decomp]:
   `map.powerNetManager.UpdatePowerNetsAndConnections_First()` before
   reading `PowerOn`, and give a net time to switch waiting consumers on,
   which it does a few at a time (see
-  [Buildings and Storage](../rimworld-modding.knack/rimworld-modding.api.buildings-and-storage.knack.md));
+  [Buildings and Storage](../modding/buildings-and-storage.knack.md));
 - rooms rebuild lazily; call
   `map.regionAndRoomUpdater.TryRebuildDirtyRegionsAndRooms()` before
   reading a room in the same frame;
@@ -214,8 +214,8 @@ points, fires nearby), make a fresh one, and continue. A single
 - Ludeon's partial source in the install:
   `Source/Verse/AI/JobDrivers/Basics/` for job driver examples to drive
   from a runner
-- [Launch Harness](rimworld-testing.api.launch-harness.knack.md) for the
+- [Launch Harness](launch-harness.knack.md) for the
   script side
 - FieldManual
-  `knacks/software-engineering/testing/in-host-smoke.knack/`,
+  `knacks/software-engineering/testing/in-host-smoke/`,
   especially its runner and flakiness companions

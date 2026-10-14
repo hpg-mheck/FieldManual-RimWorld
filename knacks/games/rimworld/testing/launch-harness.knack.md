@@ -1,18 +1,18 @@
 # RimWorld Launch Harness
 
 Load this companion after the
-[RimWorld testing overview](rimworld-testing.overview.knack.md) when
+[RimWorld testing overview](overview.knack.md) when
 writing the script that starts RimWorld for an automated run, isolates it
 from the player's own game, waits for the runner, and turns the log into a
 verdict and an exit code.
 
 The launcher's general duties (preflight, isolation, configuration,
 installing the plugin, waiting, scraping, artifacts) are in FieldManual
-`knacks/software-engineering/testing/in-host-smoke.knack/`
+`knacks/software-engineering/testing/in-host-smoke/`
 (launcher companion). Steam's side, such as libraries, direct launches,
 cloud sync, and the player's own instance, is in FieldManual
-`knacks/games/steam.knack/`, and links and process ownership on Windows
-in `knacks/windows/processes-and-files.knack/`. This companion fills in
+`knacks/games/steam/`, and links and process ownership on Windows
+in `knacks/windows/processes-and-files/`. This companion fills in
 RimWorld's values.
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
@@ -128,7 +128,7 @@ essential: the game checks defs for configuration errors only in dev mode
 With `pauseOnError` and automatic pausing off, the game keeps ticking
 through the events a test provokes. Runs meant for a
 person use different values (see
-[Showcases](../rimworld-showcases.knack/rimworld-showcases.overview.knack.md)).
+[Showcases](../showcases/overview.knack.md)).
 
 ## Launching
 
@@ -218,6 +218,6 @@ the search before skipping [observed].
 - Each DLC's `Data/<DLC>/About/About.xml` (`forceLoadAfter`) for the
   release order
 - FieldManual
-  `knacks/software-engineering/testing/in-host-smoke.knack/`
-  (launcher and flakiness companions), `knacks/games/steam.knack/`, and
-  `knacks/windows/processes-and-files.knack/`
+  `knacks/software-engineering/testing/in-host-smoke/`
+  (launcher and flakiness companions), `knacks/games/steam/`, and
+  `knacks/windows/processes-and-files/`

@@ -1,7 +1,7 @@
 # RimWorld Defs and XML
 
 Load this companion after the
-[RimWorld modding overview](rimworld-modding.overview.knack.md) when writing
+[RimWorld modding overview](overview.knack.md) when writing
 or reviewing def XML, patches, translations, or the C# types XML loads into.
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
@@ -226,7 +226,7 @@ The game is the final judge, but a run takes a minute or more. A
 reflection-based validator checks in seconds that every element maps to a
 real field, enums parse, classes resolve, def references exist, textures
 exist, and each patch's XPath selects something in the merged defs. See
-[Def Validation](../rimworld-tooling.knack/rimworld-tooling.api.def-validation.knack.md).
+[Def Validation](../tooling/def-validation.knack.md).
 
 ## Sharp Edges
 

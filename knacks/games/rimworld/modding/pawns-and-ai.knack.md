@@ -1,10 +1,10 @@
 # RimWorld Pawns and AI
 
 Load this companion after the
-[RimWorld modding overview](rimworld-modding.overview.knack.md) when pawns
+[RimWorld modding overview](overview.knack.md) when pawns
 must react to something new, follow a custom routine, stay in an area, or
 flee. Generating pawns, factions, needs, and custom races are in
-[Pawn Generation and Factions](rimworld-modding.api.pawn-generation-and-factions.knack.md).
+[Pawn Generation and Factions](pawn-generation-and-factions.knack.md).
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
@@ -37,7 +37,7 @@ each contain a gate node, `ThinkNode_ConditionalCanDoConstantThinkTreeJobNow`.
 It passes only pawns that are awake, not drafted, not burning, not in a
 mental state, and not downed unless able to crawl [decomp]. Prepend your
 giver inside that gate's `subNodes` with an XML patch (see
-[Defs and XML](rimworld-modding.api.defs-and-xml.knack.md)), and it inherits
+[Defs and XML](defs-and-xml.knack.md)), and it inherits
 all of those exclusions.
 
 Do not copy an urgent giver into the main tree as well. Prepended there,

@@ -15,7 +15,7 @@ then, treat what follows as the way to build one by hand.
 
 General showcase practice (the director, staging, viewing settings,
 capture, and the shape of a showcase framework) is in FieldManual
-`knacks/software-engineering/demonstrations/showcases.knack/`.
+`knacks/software-engineering/demonstrations/showcases/`.
 This fileset covers what RimWorld adds.
 
 Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
@@ -25,14 +25,14 @@ traced to a published source.
 
 ## Companions
 
-- [Staging](rimworld-showcases.api.staging.knack.md) — seeds, sites and
+- [Staging](staging.knack.md) — seeds, sites and
   hazard geometry, protecting the cast, props with side effects, camera,
   commentary
-- [Capture and Cues](rimworld-showcases.api.capture-and-cues.knack.md) —
+- [Capture and Cues](capture-and-cues.knack.md) —
   launching for a viewer, log cues, window handling, screen capture
 
-Showcases reuse the [smoke runner](../rimworld-testing.knack/rimworld-testing.api.smoke-runner.knack.md)
-and the [launch harness](../rimworld-testing.knack/rimworld-testing.api.launch-harness.knack.md).
+Showcases reuse the [smoke runner](../testing/smoke-runner.knack.md)
+and the [launch harness](../testing/launch-harness.knack.md).
 
 ## Mental Model
 
@@ -76,7 +76,7 @@ that [observed]. In RimWorld terms:
 
 - a scene frames its subject with the camera, explains it with a vanilla
   message, and selects it so its gizmos and inspect text show (see
-  [Staging](rimworld-showcases.api.staging.knack.md));
+  [Staging](staging.knack.md));
 - "finished" is a game-tick condition: an aftermath ending, a pull
   completing, smoke settling;
 - the director is a small state machine driven from
@@ -118,13 +118,13 @@ screen. RimWorld's forms of them:
 
 ## Further Information
 
-- [Smoke Runner](../rimworld-testing.knack/rimworld-testing.api.smoke-runner.knack.md)
-  and [Launch Harness](../rimworld-testing.knack/rimworld-testing.api.launch-harness.knack.md)
+- [Smoke Runner](../testing/smoke-runner.knack.md)
+  and [Launch Harness](../testing/launch-harness.knack.md)
 - FieldManual
-  `knacks/software-engineering/demonstrations/showcases.knack/`,
+  `knacks/software-engineering/demonstrations/showcases/`,
   including its framework companion, which outlines the menu-driven
   shape the planned API takes
-- [RimWorld modding overview](../rimworld-modding.knack/rimworld-modding.overview.knack.md),
+- [RimWorld modding overview](../modding/overview.knack.md),
   "Changing Vanilla": the main menu has no extension point, so a menu
   button needs a small Harmony patch
 - RimWorld Wiki, [Testing mods](https://rimworldwiki.com/wiki/Modding_Tutorials/Testing_mods)
