@@ -11,5 +11,7 @@ version it was reviewed against and the date of that review.
   showcases
 
 Load a game's index first and follow its load order. Pair these knacks
-with FieldManual's language-neutral standards and, where they apply, its
-general knacks on debugging, testing, and version control.
+with FieldManual's language-neutral standards and the stock knacks each
+game's index names, such as FieldManual `knacks/games/steam.knack/` for a
+game sold through Steam. Paths written as FieldManual `knacks/<path>` are
+inside a FieldManual checkout.

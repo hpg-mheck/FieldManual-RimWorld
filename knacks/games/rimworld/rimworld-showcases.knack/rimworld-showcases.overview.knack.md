@@ -4,11 +4,21 @@ Load this knack when staging an in-game demonstration for a person to
 watch: a tour of a mod's features, a review of visuals, footage for a
 release, or a way for an agent to see what it built.
 
-**Status.** This describes the current, hand-built approach: a showcase
-mode of the mod's in-game test runner, driven by a tick-based timeline. A
-dedicated showcase API is planned; revise this fileset when it exists.
+**Status.** This fileset documents the current, hand-built approach: each
+mod adds a showcase mode to its own in-game test runner, started by a
+command-line flag and driven by a tick-based timeline or a small
+director. A showcase API is planned that adds a **Showcases** button to
+the main menu, listing the mods that offer showcases, each mod's
+showcases, and each showcase's details, with warnings when a loaded mod is
+flagged as interfering. Revise this fileset when that API exists; until
+then, treat what follows as the way to build one by hand.
 
-Source review: 2026-10-13, against RimWorld 1.6.4871. Evidence marks:
+General showcase practice (the director, staging, viewing settings,
+capture, and the shape of a showcase framework) is in FieldManual
+`knacks/software-engineering/demonstrations/directed-showcases.knack/`.
+This fileset covers what RimWorld adds.
+
+Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
 1.6.4871; **[observed]** means seen in game testing on 1.6.4871 but not
 traced to a published source.
@@ -58,43 +68,41 @@ captions), log cues for outside tools, and capture.
 
 ## From Timeline to Directed Tour
 
-A timer-driven sequence, in which demonstrations fire at fixed ticks and
-the camera moves now and then, shows that features work. It was not
-enough for the person watching, who asked for a directed tour instead
-[observed]:
+A first showcase is often a timeline: demonstrations fire at fixed ticks
+and the camera moves now and then. The stock knack explains why watchers
+want a directed tour instead, one scene at a time, each waiting for its
+action to finish; a person watching a RimWorld showcase asked for exactly
+that [observed]. In RimWorld terms:
 
-- one feature at a time, each framed by the camera and introduced in
-  words before it runs;
-- each scene waits for its action to finish (an aftermath ending, a pull
-  completing, smoke settling) rather than for a fixed delay;
-- captions that orient the viewer ("2 of 8: The Steam Press");
-- the subject selected, so its buttons and inspect text show;
-- a way to skip the tour and keep the running scene;
-- optionally, a story that ties the scenes together.
+- a scene frames its subject with the camera, explains it with a vanilla
+  message, and selects it so its gizmos and inspect text show (see
+  [Staging](rimworld-showcases.api.staging.knack.md));
+- "finished" is a game-tick condition: an aftermath ending, a pull
+  completing, smoke settling;
+- the director is a small state machine driven from
+  `GameComponentTick`, logging `SCENE <name>` as each scene begins.
 
-A director is a small state machine over scenes. Each scene sets up,
-frames, explains, runs, and reports done; the director logs
-`SCENE <name>` as each begins. Build toward it even if the first version
-is a timeline: keep each beat self-contained and event-driven.
+Build toward it even if the first version is a timeline: keep each beat
+self-contained and event-driven.
 
 ## Sharp Edges
 
-- A demonstration can vanish without a trace when two places apply the
-  same safety rule with different geometry. One filter measured from a
-  structure's parts, the other from its bounding box, and a demo was
-  dropped with nothing logged [observed].
-- Props have gameplay side effects: they pull colonists, haulers, and
-  raiders across the map (see Staging).
-- The opening message must describe what will actually run. A demo
-  dropped at build time, announced anyway, misleads the viewer.
-- In dev mode any error opens the log window over the scene; routine
-  staging code must log no errors.
-- Automatic pausing on threats freezes an unattended demonstration.
+The stock knack's sharp edges all apply: silent drops, fixed delays,
+props with side effects, error windows, and agents that never see the
+screen. RimWorld's forms of them:
+
+- A demonstration vanished without a trace when the site search measured
+  a safety rule from a structure's parts and the pad filter measured it
+  from the bounding box [observed].
+- Player-owned props pull colonists, haulers, and raiders across the map
+  (see Staging).
+- In dev mode any error opens the log window over the scene, so routine
+  staging code must log no errors; clearing code that tried to destroy a
+  steam geyser covered one demonstration that way [observed].
+- RimWorld's automatic pausing on threats freezes an unattended
+  demonstration; set `automaticPauseMode` to `Never`.
 - Heavy effects slow the game below real time, so wall-clock timing
   drifts; outside tools must wait on log cues.
-- Visuals nobody looked at are unverified. Agents that built sprites,
-  overlays, and camera framing had seen only rendered previews until
-  captures were taken at each cue [observed].
 - The showcase finds bugs the tests miss, because it runs longer, on more
   of the map, with more going on [observed].
 
@@ -112,5 +120,12 @@ is a timeline: keep each beat self-contained and event-driven.
 
 - [Smoke Runner](../rimworld-testing.knack/rimworld-testing.api.smoke-runner.knack.md)
   and [Launch Harness](../rimworld-testing.knack/rimworld-testing.api.launch-harness.knack.md)
+- FieldManual
+  `knacks/software-engineering/demonstrations/directed-showcases.knack/`,
+  including its framework companion, which outlines the menu-driven
+  shape the planned API takes
+- [RimWorld modding overview](../rimworld-modding.knack/rimworld-modding.overview.knack.md),
+  "Changing Vanilla": the main menu has no extension point, so a menu
+  button needs a small Harmony patch
 - RimWorld Wiki, [Testing mods](https://rimworldwiki.com/wiki/Modding_Tutorials/Testing_mods)
 - RimWorld Wiki, [GameComponent](https://rimworldwiki.com/wiki/Modding_Tutorials/GameComponent)

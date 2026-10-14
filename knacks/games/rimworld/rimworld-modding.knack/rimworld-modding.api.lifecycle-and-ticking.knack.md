@@ -5,7 +5,7 @@ Load this companion after the
 a `Thing`, `ThingComp`, `MapComponent`, or `GameComponent` subclass, saving
 state, or holding textures and materials in C#.
 
-Source review: 2026-10-13, against RimWorld 1.6.4871. Evidence marks:
+Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
 1.6.4871; **[observed]** means seen in game testing on 1.6.4871 but not
 traced to a published source.
@@ -28,14 +28,15 @@ type calls the matching method.
 
 ### Variable Tick Rate (1.6)
 
-1.6 added `TickInterval(int delta)` to things, comps, and jobs. It can run
-every tick, but for things that are unspawned or off the current map, or
-while the camera is zoomed out, it runs as rarely as every 15 ticks;
-`delta` is the number of ticks since the last call.
-Animals use a fixed delta of 15. Scale time-based logic by `delta`, and
-override `MinTickIntervalRate`, `MaxTickIntervalRate`, or `UpdateRateTicks`
-when a thing needs a different rate. `Tick()` still runs every tick for
-work that cannot be batched, such as path following.
+1.6 added `TickInterval(int delta)` to things, comps, and jobs; `delta` is
+the number of ticks since the last call. Its interval follows the camera
+[decomp]: a thing in view runs it every tick at the closest zoom and up to
+every five ticks zoomed out, and a thing out of view or on another map
+every 15 ticks. Animals always use 15. Scale time-based logic by
+`delta`, and override `MinTickIntervalRate`, `MaxTickIntervalRate` (15 by
+default), or `UpdateRateTicks` when a thing needs a different rate.
+`Tick()` still runs every tick for work that cannot be batched, such as
+path following.
 
 `Tick()` is `protected` in 1.6, so an override written for an older
 version may fail to compile [decomp].
@@ -103,8 +104,9 @@ inside no longer rots [decomp].
 by reflection and created for every game, map, or world. Each needs a
 public constructor taking `Game`, `Map`, or `World` respectively; the game
 creates them with `Activator.CreateInstance` and logs an error if that
-fails [decomp]. Every map gets one of every `MapComponent` type, so an idle
-component must cost nothing.
+fails [decomp]. Every map gets one of every `MapComponent` type, except
+subclasses of `CustomMapComponent`, which are added only on request
+[decomp]. An idle component must therefore cost nothing.
 
 Run a long effect that should outlive the thing that started it (an
 aftermath of fires and secondary blasts, say) in a `MapComponent` that is
@@ -150,7 +152,8 @@ helpers each run in several passes (`LoadSaveMode.Saving`, `LoadingVars`,
 - `Scribe_Deep.Look(ref obj, "obj")` for objects this one owns. The type
   needs a parameterless constructor (it may be private) [decomp].
 - `Scribe_References.Look(ref thing, "thing")` for things saved elsewhere.
-  A reference to a destroyed thing is saved as null [decomp].
+  A reference to a destroyed thing is saved as null unless
+  `saveDestroyedThings` is true [decomp].
 - `Scribe_Collections.Look(ref list, "list", LookMode.Deep)` and the other
   `LookMode`s for lists and dictionaries.
 

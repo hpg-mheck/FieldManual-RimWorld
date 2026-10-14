@@ -5,7 +5,7 @@ Load this companion after the
 buttons (gizmos), inspect-pane text, messages, labels or overlays on the
 map, or developer tools.
 
-Source review: 2026-10-13, against RimWorld 1.6.4871. Evidence marks:
+Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
 1.6.4871; **[observed]** means seen in game testing on 1.6.4871 but not
 traced to a published source.
@@ -69,10 +69,10 @@ public override IEnumerable<Gizmo> CompGetGizmosExtra()
 ## Inspect Pane
 
 `GetInspectString()` on a `ThingWithComps` joins the base text and each
-comp's `CompInspectStringExtra()` with line breaks. A comp string that ends
-in whitespace logs an error once [decomp]; return lines without a trailing
-newline. Use the pane for state the player cannot see otherwise: a mode, a
-distance, a countdown.
+comp's `CompInspectStringExtra()` with line breaks. In dev mode, a comp
+string that ends in whitespace logs an error once [decomp]; return lines
+without a trailing newline. Use the pane for state the player cannot see
+otherwise: a mode, a distance, a countdown.
 
 Job report strings (the status under a pawn's name) are lowercase and end
 with a full stop; see [Pawns and AI](rimworld-modding.api.pawns-and-ai.knack.md).
@@ -159,7 +159,9 @@ routine paths error-free, not merely survivable.
 The options dialog refuses a UI scale unless the screen is at least 1,024
 by 768 scaled pixels, but a value written to `Prefs.xml` is applied without
 that check [decomp]. That is how a launch script sets 2x scale on a smaller
-window.
+window. Outside dev mode, though, the game resets the scale and logs
+"Resolution too small" once the scaled screen is narrower than 1,024
+*and* shorter than 768 [decomp].
 
 ## Review Checklist
 

@@ -5,7 +5,7 @@ Load this companion after the
 makes explosions, starts fires, launches projectiles, reacts to damage, or
 works with long ranges and large radii.
 
-Source review: 2026-10-13, against RimWorld 1.6.4871. Evidence marks:
+Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
 1.6.4871; **[observed]** means seen in game testing on 1.6.4871 but not
 traced to a published source.
@@ -17,7 +17,7 @@ damAmount: ..., chanceToStartFire: ..., propagationSpeed: ...)` spawns an
 `Explosion` that expands over several ticks; it is not instantaneous. The
 wave reaches a cell at distance *d* at
 `startTick + (int)(d * 1.5 / propagationSpeed)` [decomp], so a 75-tile
-blast at the default speed takes 113 ticks to reach its edge. Judge the
+blast at the default speed takes 112 ticks to reach its edge. Judge the
 damage of a blast only after its wave has arrived; a test that checked a
 target immediately judged it before it was hit [observed].
 
@@ -42,8 +42,8 @@ projectiles start no fires unless told to.
 
 When something must stay out of a blast, budget the whole effect: the main
 radius, plus every secondary blast's offset and radius, plus fires that
-spread afterwards. A 75-tile blast with secondary explosions near its edge
-reached about 84 tiles [observed].
+spread afterwards. In one design, a 75-tile blast with secondary
+explosions near its edge budgeted out to about 84 tiles.
 
 ### Explosive Items
 
@@ -69,6 +69,15 @@ each other.
   explosions and a few thousand fires cost about 9 ms per tick while it
   ran [observed].
 
+## Sounds
+
+A `SoundDef` is either a sustainer (`sustain` true), started with
+`TrySpawnSustainer` and kept alive by its owner, or a one-shot played with
+`PlayOneShot`. Using the wrong call logs an error and plays nothing
+[decomp]. Similar names do not tell you which: Core's `HissSmall` is a
+sustainer, `PsychicPulseGlobal` a one-shot. Check the def under
+`Data/Core/Defs/SoundDefs/` before reusing it.
+
 ## Projectiles
 
 Launch with `projectile.Launch(launcher, origin, usedTarget,
@@ -76,10 +85,11 @@ intendedTarget, hitFlags, ...)`.
 
 **Never launch without a launcher.** Two vanilla paths dereference it:
 
-- every projectile's impact makes noise within 12 tiles; an unowned animal
-  hearing a `Bullet`-class impact may flee from the projectile's
-  `Launcher`, which throws a `NullReferenceException` when it is null
-  [decomp] (`Bullet.AnimalsFleeImpact` is true in the shipped source);
+- every projectile's impact makes noise within 12 tiles; an animal with
+  no master that hears a `Bullet`-class impact may (40 percent) flee from
+  the projectile's `Launcher`, which throws a `NullReferenceException`
+  when it is null [decomp] (`Bullet.AnimalsFleeImpact` is true in the
+  shipped source);
 - a delayed explosive projectile reads `launcher.Faction` on landing
   (shipped `Projectile_Explosive.cs`).
 
@@ -113,15 +123,16 @@ about 79.8 tiles; asking for more logs "Not enough squares to get to
 radius ..." [decomp]. Clamp every radius, and remember the callers you do
 not write:
 
-- a turret flagged `ai_combatDangerous` adds itself to raiders' avoidance
-  grid with a radius of its range plus 4 [decomp], so a turret with a range
-  beyond about 75 logs that error whenever raiders path. Clear the flag
-  or clamp the range; a test can force
-  `map.avoidGrid.Regenerate()` to catch it;
+- a player turret flagged `ai_combatDangerous` adds itself to raiders'
+  avoidance grid with a radius of its range plus 4 [decomp], so a turret
+  with a range beyond about 75 logs that error whenever the grid is
+  rebuilt for raiders' pathing. Clear the flag or clamp the range; a test
+  can force `map.avoidGrid.Regenerate()` to catch it;
 - `GenDraw.DrawRadiusRing` refuses a radius beyond the limit and logs an
-  error once [decomp], so a long-range turret needs an outline of its own.
-  Rings are costly well before the limit: a 75-tile ring covers about
-  17,600 cells, drawn every frame while it shows [observed].
+  error once [decomp], so a long-range turret needs an outline of its own,
+  including while it is being placed. Rings are costly well before the
+  limit: the ring collects every cell inside it each frame it shows
+  [decomp], about 17,600 cells at 75 tiles.
 
 ## Damage Hooks
 

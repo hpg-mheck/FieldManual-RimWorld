@@ -13,7 +13,8 @@ should.
 
 The material was distilled from the development of a working RimWorld 1.6
 content mod, checked against the game's own data and partial source, and
-verified where necessary by decompiling the game. Each claim says which.
+verified where necessary by decompiling the game. Claims that rest only
+on decompilation or only on game testing are marked as such.
 
 ## Contents
 
@@ -30,10 +31,25 @@ in four filesets, each an overview with API companions:
   decompiling, reflection, finding vanilla assets, and a reflection-based
   def validator
 - **Showcases** — staging in-game demonstrations for a person to watch,
-  with log cues for capture tooling
+  with log cues for capture tooling; this documents the current hand-built
+  approach and will be revised when a planned showcase API exists
 
 Start at the [RimWorld index](knacks/games/rimworld/README.md), which also
 explains the evidence marks used throughout.
+
+## Builds On FieldManual
+
+The pack covers only what RimWorld adds. General practice lives in
+FieldManual's stock knacks, which these knacks cite by their path inside a
+FieldManual checkout, written as FieldManual `knacks/<path>`. The main
+ones are FieldManual `knacks/games/steam.knack/`, `knacks/dotnet/`,
+`knacks/windows/`,
+`knacks/software-engineering/testing/in-host-smoke-testing.knack/`,
+`knacks/software-engineering/demonstrations/directed-showcases.knack/`,
+and `knacks/AI/agent-orchestration/proving-checks-can-fail.knack/`. The
+[RimWorld index](knacks/games/rimworld/README.md) says which stock knack
+each fileset builds on. If a cited stock knack is missing from your
+checkout, update FieldManual.
 
 ## Adding It to a Project
 
@@ -72,7 +88,7 @@ git submodule update --remote FieldManual-RimWorld
 - **Game version:** RimWorld 1.6 (build 1.6.4871), with Royalty, Ideology,
   Biotech, Anomaly, and Odyssey. Earlier versions are out of scope, and
   the 1.7 beta was not reviewed.
-- **Reviewed:** 2026-10-13.
+- **Reviewed:** 2026-10-14.
 - **Platform:** the game material is platform-neutral; build, launch,
   and window-handling examples assume Windows.
 - **Examples** use a fictional mod, "Brass Works". No real mod, author, or

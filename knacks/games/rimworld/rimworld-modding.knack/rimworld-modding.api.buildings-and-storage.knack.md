@@ -7,7 +7,7 @@ player's, stores items, takes bills, or must not attract colonists,
 haulers, or raiders. Spawning and terrain are in
 [Things and Maps](rimworld-modding.api.things-and-maps.knack.md).
 
-Source review: 2026-10-13, against RimWorld 1.6.4871. Evidence marks:
+Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
 1.6.4871; **[observed]** means seen in game testing on 1.6.4871 but not
 traced to a published source.
@@ -17,12 +17,16 @@ traced to a published source.
 - Power nets have **no faction check**: a player's generator powers
   another faction's lamps on the same net [decomp]. Only the gizmos
   (switch, reconnect, color) are limited to the player.
-- A consumer connects to the nearest transmitter within its footprint
-  expanded by 6 cells [decomp].
+- A consumer connects to the nearest transmitter within 6 cells of its
+  position cell (a 13 by 13 box around it, not around its whole
+  footprint) [decomp].
 - Nets are rebuilt once per **frame** (`Map.MapUpdate`), not per tick.
   Code that spawns buildings and ticks synchronously within one frame must
   call `map.powerNetManager.UpdatePowerNetsAndConnections_First()` before
   reading `PowerOn` [decomp].
+- A net with spare power switches waiting consumers on gradually: every
+  200 / *n* ticks (at least 30) for *n* waiting, it turns on 5 percent of
+  them, at least one [decomp]. Allow for that before checking `PowerOn`.
 - A dynamic draw goes through `CompPowerTrader.PowerOutput` (negative for
   consumption) and must be reapplied regularly, because rewiring calls
   `SetUpPowerVars()`, which restores the def's base value. Vanilla's cooler
@@ -82,7 +86,8 @@ only downed pawns of their own faction.
   remote building's storage `SetDisallowAll()` and fill it by code if
   haulers must never feed it.
 - **Zones and spawned things.** A thing that cannot overlap zones (an
-  impassable building, storage, a plant grower) removes the zone cells
+  impassable building, storage, a surface such as a table, a plant
+  grower) removes the zone cells
   under it, and the zone then keeps only the piece connected to its first
   cell: **cells cut off elsewhere are deleted** [decomp]. When clearing
   ground from code, remove zone cells only inside the cleared area and
@@ -105,7 +110,11 @@ bookcase (`Building_Bookcase`):
   any mode but `WillReplace`, `Vanish` included [decomp]; to remove the
   contents too, destroy them first (`ClearAndDestroyContents`);
 - `ISuspendableThingHolder` freezes the contents (see
-  [Lifecycle and Ticking](rimworld-modding.api.lifecycle-and-ticking.knack.md)).
+  [Lifecycle and Ticking](rimworld-modding.api.lifecycle-and-ticking.knack.md));
+- pawns' food search reads the map's lists of spawned things without
+  looking inside haul sources, so food held in such a building is not
+  eaten from there [decomp]; your own searches can pass
+  `lookInHaulSources: true` to `listerThings.GetAllThings`.
 
 ## Bills and Autonomous Production
 

@@ -3,10 +3,16 @@
 Load this knack when deciding how to verify a RimWorld 1.6 mod, adding a
 feature that needs checks, or chasing a failure that appears only in game.
 It describes a layered strategy, from seconds-long unit tests to an
-automated in-game run. General test discipline lives in FieldManual's own
-standards; this fileset covers what RimWorld adds.
+automated in-game run.
 
-Source review: 2026-10-13, against RimWorld 1.6.4871. Evidence marks:
+This fileset maps general practice onto RimWorld. Load the general
+knacks for the pattern itself: FieldManual
+`knacks/software-engineering/testing/in-host-smoke-testing.knack/` (the
+layers, the in-host runner, the launcher, flake control) and
+`knacks/AI/agent-orchestration/proving-checks-can-fail.knack/` (sabotage
+runs and vacuous checks).
+
+Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
 1.6.4871; **[observed]** means seen in game testing on 1.6.4871 but not
 traced to a published source.
@@ -31,8 +37,8 @@ which reuse the runner to stage demonstrations for a person.
 Much of what can go wrong in a RimWorld mod is invisible until the game
 runs it:
 
-- XML that names a missing field or class loads with an error, or falls
-  back silently to vanilla behavior;
+- XML that names a missing field logs an error and skips the element, and
+  a missing class drops the whole def [decomp];
 - configuration errors are computed only after every def has loaded, and
   only when dev mode is on [decomp];
 - behavior depends on the map, the active DLCs, other mods, and dozens of
@@ -50,7 +56,8 @@ first:
 3. **Def validation by reflection** — the game's assemblies; under a
    minute. It catches misspelled fields, bad enum values, missing classes
    and textures, and XPaths that select nothing.
-4. **An in-game smoke run** — the game itself; minutes. It catches
+4. **An in-game smoke run** — the game itself; about a minute per run
+   (35 to 75 seconds on one machine) [observed]. It catches
    configuration errors, runtime exceptions, and wrong behavior.
 5. **A showcase or manual play** — the game and a person. It catches what
    checks cannot judge: visuals, feel, and balance.
@@ -68,16 +75,17 @@ first:
 5. Watch a showcase, or play, for what checks cannot judge.
 6. Record deviations and flakes with the evidence that explains them.
 
-Accept an in-game change only after two consecutive clean runs, and keep
-every run's output so failures can be compared across maps [observed].
+Apply the stock rule of two consecutive clean runs before calling an
+in-game change green, and keep every run's output so failures can be
+compared across maps. A random quick-test map makes the rule matter more
+here than in most hosts.
 
 ## Prove Each Check Can Fail
 
-A check that has never failed may be testing nothing. Before trusting a
-new in-game check, run it once against code that breaks the behavior: the
-previous version, or a deliberate "sabotage" edit. Several breaks can share
-a run if they cannot mask one another. Typical vacuous passes found that
-way [observed]:
+Before trusting a new in-game check, see it fail against code that breaks
+the behavior, as FieldManual
+`knacks/AI/agent-orchestration/proving-checks-can-fail.knack/` describes.
+In RimWorld runs, sabotage found these vacuous passes [observed]:
 
 - a fixture destroyed by an earlier destructive test, accepted by a null
   guard (every colonist had died in earlier blasts);
@@ -136,5 +144,8 @@ realistic mod list as well as with vanilla and the DLCs.
 - RimWorld Wiki, [Troubleshooting](https://rimworldwiki.com/wiki/Modding_Tutorials/Troubleshooting)
   and [Finding Exceptions](https://rimworldwiki.com/wiki/Modding_Tutorials/Troubleshooting/Finding_Exceptions)
 - RimWorld Wiki, [ConfigErrors](https://rimworldwiki.com/wiki/Modding_Tutorials/ConfigErrors)
-- FieldManual standards and testing guidance:
+- FieldManual
+  `knacks/software-engineering/testing/in-host-smoke-testing.knack/` and
+  `knacks/AI/agent-orchestration/proving-checks-can-fail.knack/`, in a
+  FieldManual checkout:
   <https://github.com/Hard-Problems-Group-LLC/FieldManual>

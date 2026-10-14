@@ -5,10 +5,14 @@ Load this companion after the
 building the scene a showcase runs in: where each demonstration goes, what
 it needs, who must be kept safe, and what the camera and messages show.
 
-**Status.** The current, hand-built approach; revise when the planned
-showcase API exists.
+**Status.** This documents the current, hand-built approach; revise it
+when the planned showcase API (a main-menu Showcases button listing mods,
+their showcases, and details, with warnings about flagged mods) exists.
+The general staging rules are in the staging companion of FieldManual
+`knacks/software-engineering/demonstrations/directed-showcases.knack/`;
+this companion gives RimWorld's calls and pitfalls.
 
-Source review: 2026-10-13, against RimWorld 1.6.4871. Evidence marks:
+Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
 1.6.4871; **[observed]** means seen in game testing on 1.6.4871 but not
 traced to a published source.
@@ -129,3 +133,6 @@ for the engine rules behind these.
 - [Pawn Generation and Factions](../rimworld-modding.knack/rimworld-modding.api.pawn-generation-and-factions.knack.md)
   for hidden neutral factions and calm scripted pawns
 - RimWorld Wiki, [DebugActions](https://rimworldwiki.com/wiki/Modding_Tutorials/DebugActions)
+- FieldManual
+  `knacks/software-engineering/demonstrations/directed-showcases.knack/`
+  (staging companion)

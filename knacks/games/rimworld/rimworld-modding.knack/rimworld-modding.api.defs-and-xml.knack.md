@@ -4,7 +4,7 @@ Load this companion after the
 [RimWorld modding overview](rimworld-modding.overview.knack.md) when writing
 or reviewing def XML, patches, translations, or the C# types XML loads into.
 
-Source review: 2026-10-13, against RimWorld 1.6.4871. Evidence marks:
+Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
 1.6.4871; **[observed]** means seen in game testing on 1.6.4871 but not
 traced to a published source.
@@ -104,12 +104,17 @@ field's declared type, as in the comp example above. Resolution rules
 
 - Vanilla types resolve by short name from the game's own namespaces
   (`Verse`, `RimWorld`, `Verse.AI`, `Verse.AI.Group`, `RimWorld.Planet`,
-  and a few others).
+  and a few others), as do types declared in no namespace at all.
 - A mod's types need their namespace-qualified name:
   `BrassWorks.CompProperties_PressureGauge`.
-- A class that cannot be found logs "Could not find type named ..." and the
-  loader *falls back to the declared type*. Behavior then silently reverts
-  to vanilla, so treat that error as fatal in testing.
+- With 1.6's default loader, a class that cannot be found **drops the whole
+  def**: the log shows "Exception loading def from file ..." with "Could
+  not find type named ..." inside it, and the def never reaches the
+  database, so everything that refers to it fails to resolve.
+- Under `-legacy-xml-deserializer`, the old loader instead logs "Could not
+  find type named ..." and *falls back to the declared type*, so the def
+  loads and silently behaves like vanilla. Treat either error as fatal in
+  testing.
 
 Def-level class fields work the same way: `thingClass`, `compClass`,
 `driverClass`, `workerClass`, and `giverClass`.
@@ -138,8 +143,9 @@ catch new content [decomp]:
   explodes (see Combat and Effects).
 
 Research cost is scaled by tech level: a colony below the project's level
-(capped at Industrial) pays 50 percent more per level, and a colony at or
-above it pays the listed cost [decomp].
+(capped at Industrial) pays an extra half of the listed cost for each
+level of difference, and a colony at or above it pays the listed cost
+[decomp].
 
 Add rules of your own by overriding `ConfigErrors()` on your `Def`
 subclasses, `CompProperties`, and `DefModExtension`s. Config errors appear
@@ -216,16 +222,17 @@ A file under `Patches/` has a `<Patch>` root and `<Operation>` children:
 
 ## Validating XML Against Types
 
-The game is the final judge, but a launch takes minutes. A reflection-based
-validator checks in seconds that every element maps to a real field, enums
-parse, classes resolve, def references exist, textures exist, and each
-patch's XPath selects something in the merged defs. See
+The game is the final judge, but a run takes a minute or more. A
+reflection-based validator checks in seconds that every element maps to a
+real field, enums parse, classes resolve, def references exist, textures
+exist, and each patch's XPath selects something in the merged defs. See
 [Def Validation](../rimworld-tooling.knack/rimworld-tooling.api.def-validation.knack.md).
 
 ## Sharp Edges
 
-- A misspelled class in `Class=` falls back to the vanilla base type: the
-  def loads and quietly does the wrong thing.
+- A misspelled class in `Class=` drops the whole def under the default
+  loader, and with the legacy loader quietly falls back to the vanilla
+  base type.
 - Inherited list items accumulate. A child that "redefines" `comps`
   without `Inherit="False"` gets both sets.
 - Patching a child for something it inherits finds nothing.

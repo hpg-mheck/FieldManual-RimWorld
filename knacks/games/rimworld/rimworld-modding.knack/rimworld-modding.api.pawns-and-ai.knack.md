@@ -6,7 +6,7 @@ must react to something new, follow a custom routine, stay in an area, or
 flee. Generating pawns, factions, needs, and custom races are in
 [Pawn Generation and Factions](rimworld-modding.api.pawn-generation-and-factions.knack.md).
 
-Source review: 2026-10-13, against RimWorld 1.6.4871. Evidence marks:
+Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
 1.6.4871; **[observed]** means seen in game testing on 1.6.4871 but not
 traced to a published source.
@@ -30,7 +30,7 @@ the lord's current toil assigns and that the main tree consults.
 The main tree is the place for ordinary choices. It is too slow for
 interruptions: a colonist hauling for ten seconds asks it nothing until the
 haul ends. Reactions that must happen within a second or two, such as
-fleeing a countdown, belong in the constant tree [observed].
+fleeing a countdown, therefore belong in the constant tree.
 
 Vanilla's `HumanlikeConstant`, `AnimalConstant`, and `InsectConstant` trees
 each contain a gate node, `ThinkNode_ConditionalCanDoConstantThinkTreeJobNow`.
@@ -40,9 +40,9 @@ giver inside that gate's `subNodes` with an XML patch (see
 [Defs and XML](rimworld-modding.api.defs-and-xml.knack.md)), and it inherits
 all of those exclusions.
 
-Do not copy an urgent giver into the main tree as well. There it would sit
-above vanilla's "wait if drafted" node and send drafted colonists running
-whenever a job ended [observed].
+Do not copy an urgent giver into the main tree as well. Prepended there,
+it would sit above the node vanilla's `Humanlike.xml` labels "Wait if
+drafted" and send drafted colonists running whenever a job ended.
 
 Know which trees "everyone" runs. Humanlikes, animals (dryads included),
 and insects use the three trees above. Mechanoids, Odyssey's drones,
@@ -154,8 +154,9 @@ A `DutyDef` carries its own `thinkNode`. Choose the duty for what it does:
   Region.GridSize of 12 and will break" [decomp]; use one lord per area
   rather than one large radius;
 - `ThinkNode_ForbidOutsideFlagRadius` treats every cell beyond its radius
-  as forbidden, **food included**, so leashed pawns can starve with a meal
-  just outside [observed]. Stop hunger (a hediff stage with
+  from the duty location as forbidden, **food included** [decomp], so a
+  leashed pawn whose nearest meal lies just outside can starve; a review
+  caught one such case. Stop hunger (a hediff stage with
   `hungerRateFactor` 0) or keep food inside the leash;
 - `JobGiver_SeekSafeTemperature` accepts `maxRadius` but its region search
   ignores it [decomp], so a leashed pawn with heatstroke can walk across the

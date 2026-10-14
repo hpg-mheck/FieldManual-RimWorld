@@ -4,9 +4,13 @@ Load this companion after the
 [RimWorld testing overview](rimworld-testing.overview.knack.md) when
 building or extending an in-game test runner: code inside the mod that, when
 the game starts with a flag, builds scenarios on a quick-test map, drives
-real ticks, checks results, and logs a verdict.
+real ticks, checks results, and logs a verdict. The general design (the
+log protocol, simulated time, scenario hygiene, error attribution) is in
+FieldManual
+`knacks/software-engineering/testing/in-host-smoke-testing.knack/`; this
+companion gives RimWorld's version of each part.
 
-Source review: 2026-10-13, against RimWorld 1.6.4871. Evidence marks:
+Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
 1.6.4871; **[observed]** means seen in game testing on 1.6.4871 but not
 traced to a published source.
@@ -77,8 +81,9 @@ the engine does once per *frame* does not happen [decomp]:
 
 - power nets are rewired in `Map.MapUpdate`; call
   `map.powerNetManager.UpdatePowerNetsAndConnections_First()` before
-  reading `PowerOn`, and give a net time to switch consumers on (it
-  enables waiting consumers one at a time);
+  reading `PowerOn`, and give a net time to switch waiting consumers on,
+  which it does a few at a time (see
+  [Buildings and Storage](../rimworld-modding.knack/rimworld-modding.api.buildings-and-storage.knack.md));
 - rooms rebuild lazily; call
   `map.regionAndRoomUpdater.TryRebuildDirtyRegionsAndRooms()` before
   reading a room in the same frame;
@@ -123,11 +128,10 @@ harness turns the first off.
 
 ## Writing Checks
 
-- Name each check as a stable sentence ("the press vents to zero"); the
-  harness and later runs compare by name.
-- Make the failure detail say what was observed: positions, counts,
-  states, the job a pawn was doing, who reserved what. A flake can then be
-  diagnosed from one log.
+- Name checks as stable sentences ("the press vents to zero"), and make
+  each failure detail say what was observed, as the stock runner
+  companion describes. In RimWorld that means positions, counts, states,
+  the job a pawn was doing, and who reserved what.
 - Log NOTE lines in passing runs too (distances reached, seeds, counts).
   Comparing notes across thirty saved runs found a creature that reached
   safety and then wandered back into danger [observed].
@@ -212,3 +216,6 @@ points, fires nearby), make a fresh one, and continue. A single
   from a runner
 - [Launch Harness](rimworld-testing.api.launch-harness.knack.md) for the
   script side
+- FieldManual
+  `knacks/software-engineering/testing/in-host-smoke-testing.knack/`,
+  especially its runner and flakiness companions

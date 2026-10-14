@@ -4,10 +4,15 @@ Load this companion after the
 [RimWorld showcases overview](rimworld-showcases.overview.knack.md) when
 launching a showcase for a viewer, timing it, or capturing it for review.
 
-**Status.** The current, hand-built approach; revise when the planned
-showcase API exists.
+**Status.** This documents the current, hand-built approach; revise it
+when the planned showcase API (a main-menu Showcases button listing mods,
+their showcases, and details, with warnings about flagged mods) exists.
+Window placement, DPI awareness, readiness markers, and window capture on
+Windows are in FieldManual `knacks/windows/desktop-automation.knack/`;
+cue and capture practice in general is in
+`knacks/software-engineering/demonstrations/directed-showcases.knack/`.
 
-Source review: 2026-10-13, against RimWorld 1.6.4871. Evidence marks:
+Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
 1.6.4871; **[observed]** means seen in game testing on 1.6.4871 but not
 traced to a published source.
@@ -21,7 +26,9 @@ stay small and muted; a run for a person gets:
 - sound (a moderate `volumeMaster`, such as 0.6);
 - `uiScale` 2 for a high-resolution display. The options dialog refuses a
   scale that leaves less than 1,024 by 768 scaled pixels, but a value in
-  `Prefs.xml` is applied without that check [decomp];
+  `Prefs.xml` is applied without that check [decomp]. Keep `devMode` on
+  or the window large: outside dev mode the game resets the scale once
+  the scaled screen is below 1,024 wide and 768 high [decomp];
 - a larger starting window, maximized once the game is ready (below);
 - `automaticPauseMode` `Never` and `pauseOnError` false, so neither a
   threat letter nor an error freezes the demonstration;
@@ -29,27 +36,18 @@ stay small and muted; a run for a person gets:
   list are untouched;
 - no shutdown at the end: the game stays open for the viewer.
 
-Before launching, check whether the person's own RimWorld is running, and
-never close a game window you did not start. When asked to restart a
-showcase, confirm afterwards that only one instance is running, and tell
-the person which window is yours [observed].
+Leave the person's own RimWorld alone, as the stock knacks require. When
+asked to restart a showcase, confirm afterwards that only one instance of
+yours is running, and tell the person which window it is [observed].
 
 ## Maximizing After the Game Is Ready
 
-The game changes its resolution during startup, which undoes a window
-maximized too early. Wait for the showcase's `READY` cue in the log, then
-maximize [observed]. On Windows, PowerShell can call
-`ShowWindowAsync(hWnd, 3)` (`SW_MAXIMIZE`) from `user32.dll` on the
-process's main window handle:
-
-```powershell
-Add-Type -Namespace Win32 -Name Window -MemberDefinition @'
-[DllImport("user32.dll")]
-public static extern bool ShowWindowAsync(System.IntPtr hWnd, int nCmdShow);
-'@
-$proc.Refresh()
-[Win32.Window]::ShowWindowAsync($proc.MainWindowHandle, 3) | Out-Null
-```
+RimWorld applies its saved resolution during startup, which undoes a
+window maximized too early. Wait for the showcase's `READY` cue in the
+log, then maximize [observed], for example with `ShowWindowAsync` and
+`SW_MAXIMIZE` on the game process's main window, as the Win32 companion
+of FieldManual `knacks/windows/desktop-automation.knack/` shows, and
+verify the result.
 
 ## Log Cues
 
@@ -83,13 +81,15 @@ time, so speed changes and slowdowns keep the sequence intact.
 
 ## Capturing
 
-- Capture the game window at each cue. A tool that tails the log and
-  captures on a cue gets the right moment regardless of speed.
+- Capture the game window at each cue, with a tool that tails the log;
+  the stock desktop-automation knack covers window capture itself.
 - For animation, capture a burst of frames, crop the area of interest,
   scale it up without smoothing, and tile the frames into one contact
   sheet; one image then shows a pulse, a spin, or a flip [observed].
-- Look at the captures. They are the only way an agent sees what it drew,
-  at the zoom and UI scale a viewer uses, beside vanilla's art.
+- Look at the captures. They are the only way an agent sees what it drew
+  at the zoom and UI scale a viewer uses, beside vanilla's art; agents
+  that built sprites, overlays, and camera framing had otherwise seen only
+  rendered previews [observed].
 - When a person reports that "something extreme happened", capture the
   screen and scan the log of that instance at once; the explanation is
   usually in both. A running instance keeps the assembly it loaded, so it
@@ -111,3 +111,5 @@ time, so speed changes and slowdowns keep the sequence intact.
 - Unity 2022.3 manual, Player command-line arguments:
   <https://docs.unity3d.com/2022.3/Documentation/Manual/PlayerCommandLineArguments.html>
 - [Showcase Staging](rimworld-showcases.api.staging.knack.md)
+- FieldManual `knacks/windows/desktop-automation.knack/` and
+  `knacks/software-engineering/demonstrations/directed-showcases.knack/`

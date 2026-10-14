@@ -16,9 +16,10 @@ review guidance.
   games, starting with RimWorld
 
 Start with the narrowest area that matches the task, then follow its local
-index. Load these alongside FieldManual's stock knacks; a project's own
-`knacks/` tree may refine both, and contradictions should be recorded and
-resolved rather than guessed away.
+index. Load these alongside FieldManual's stock knacks, cited as
+FieldManual `knacks/<path>` (a path inside a FieldManual checkout). A
+project's own `knacks/` tree may refine both, and contradictions should be
+recorded and resolved rather than guessed away.
 
 ## Maintenance Model
 

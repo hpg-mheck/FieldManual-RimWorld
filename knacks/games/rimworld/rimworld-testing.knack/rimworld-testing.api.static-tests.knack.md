@@ -5,7 +5,7 @@ Load this companion after the
 setting up tests that run without launching the game: unit tests of mod
 logic and regression tests over the mod's XML and the game's own data.
 
-Source review: 2026-10-13, against RimWorld 1.6.4871. Evidence marks:
+Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
 1.6.4871; **[observed]** means seen in game testing on 1.6.4871 but not
 traced to a published source.
@@ -17,8 +17,7 @@ touches `Thing`, `Map`, or `Pawn` is hard to unit-test. Move everything that
 does not need them into a separate class library with **no** reference to
 the game: geometry, timing schedules, damage and repair arithmetic, layout
 plans, random-split rules, text formatting. The mod assembly references the
-library and ships its DLL in `Assemblies/` beside its own; the game loads a
-.NET Standard 2.0 library there [observed].
+library and ships its DLL in `Assemblies/` beside its own.
 
 ```text
 Source/
@@ -28,16 +27,17 @@ Tests/
   BrassWorks.Tests/            test framework; references the core only
 ```
 
-Build gotchas for `netstandard2.0` [observed]:
+FieldManual `knacks/dotnet/netstandard-shared-library.knack/` covers the
+general pattern and the `netstandard2.0` language traps: the C# 7.3
+default, a pinned numeric `LangVersion`, `IsExternalInit` for records,
+and the missing index and range types. What RimWorld adds:
 
-- the default C# version there is 7.3; set `LangVersion` to `latest`;
-- `record` types and `init` setters need a small internal
-  `System.Runtime.CompilerServices.IsExternalInit` class;
-- index and range syntax (`list[^1]`, `a[1..3]`) needs types that
-  `netstandard2.0` lacks; write `list[list.Count - 1]`;
-- Unity's `Mathf` and the game's `Rand` are unavailable; use
-  `System.Math`, and pass random numbers in as arguments so tests control
-  them.
+- Unity's `Mathf` and the game's `Rand` are unavailable in the library;
+  use `System.Math`, and pass random numbers in as arguments so tests
+  control them;
+- the game loaded the `netstandard2.0` library from `Assemblies/` with no
+  facade assemblies shipped beside it [observed]; the install's `Managed`
+  folder already holds `netstandard.dll`.
 
 Design the library so the game half only *executes* its results: a layout
 plan lists every cell, wall, and placement in local coordinates; the game
@@ -113,7 +113,7 @@ new DLC race shows up as a test failure.
 
 - Ludeon Studios, `ModUpdating.txt` in the install root (folder layout)
 - RimWorld Wiki, [Setting up a solution](https://rimworldwiki.com/wiki/Modding_Tutorials/Setting_up_a_solution)
+- FieldManual `knacks/dotnet/netstandard-shared-library.knack/`, for the
+  split, the polyfills, and the language-version decision
 - Microsoft, .NET Standard versions and API coverage:
   <https://learn.microsoft.com/en-us/dotnet/standard/net-standard>
-- Microsoft, C# language versioning:
-  <https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version>

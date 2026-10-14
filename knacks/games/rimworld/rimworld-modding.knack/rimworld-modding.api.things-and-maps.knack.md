@@ -6,7 +6,7 @@ creates, moves, or removes things, changes terrain or roofs, or clears and
 builds ground from code. Power, ownership, doors, zones, and storage are in
 [Buildings and Storage](rimworld-modding.api.buildings-and-storage.knack.md).
 
-Source review: 2026-10-13, against RimWorld 1.6.4871. Evidence marks:
+Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
 1.6.4871; **[observed]** means seen in game testing on 1.6.4871 but not
 traced to a published source.
@@ -58,7 +58,8 @@ default) destroys it, `FullRefund` refunds it, and `VanishOrMoveAside`
 moves items aside first. The rules, from `GenSpawn.SpawningWipes` [decomp]:
 
 - an edifice wipes other edifices, natural rock included;
-- an impassable building wipes items; a pass-through one leaves them;
+- an impassable building wipes items unless it has a surface, as a shelf
+  or table does; a pass-through one leaves them;
 - anything that carries power replaces a conduit in its cell;
 - a thing whose def is not `destroyable` is never wiped;
 - pawns are never wiped, so a wall spawned on a pawn traps it.
@@ -99,8 +100,9 @@ in an empty corner of the rectangle should not reject a site.
 ## Clearing Ground Safely
 
 Clear only the cells a structure occupies, grown by any margin it needs. A
-cleared bounding rectangle can be many times larger than the structure and
-can swallow an unrelated base [observed]. Then, in order:
+bounding rectangle can be many times larger than the structure; a review
+of one sprawling layout found a rectangle of nearly 10,000 cells that
+could have swallowed an unrelated base. Then, in order:
 
 1. unfog the area plus one cell, so breaking into a fogged cave sends no
    "area revealed" letter;
@@ -124,13 +126,15 @@ group, whose hostile occupants form an assault [decomp].
 - Support is rechecked only when a roof holder despawns during play. The
   unsupported cells go into `map.roofCollapseBuffer` and fall during the
   next tick's `MapPreTick`, crushing what is under them [decomp].
-- Marks already in the buffer drop *new* roofs too. A builder that roofs
+- Marks already in the buffer drop *new* roofs too: the next tick drops
+  whatever roof stands in a marked cell [decomp]. A builder that roofs
   cells where rock was removed must clear stale marks there first, or the
-  fresh roof falls on the first tick [observed]. For bulk removal,
+  fresh roof falls on the first tick. For bulk removal,
   `RoofCollapseCellsFinder.RemoveBulkCollapsingRoofs` handles a set of
   removed holders in one call [decomp].
 - Only thick rock roofs leave `CollapsedRocks` behind; a fallen thin or
-  constructed roof leaves no trace to count afterwards.
+  constructed roof leaves only rubble filth, so count roofed cells before
+  and after instead.
 - A room touching the map edge, or with at least a quarter of its cells
   unroofed, uses the outdoor temperature, and heat pushed into it does
   nothing [decomp]. Leave a hot machine's yard open.
@@ -150,8 +154,10 @@ group, whose hostile occupants form an assault [decomp].
   than matching names; DLC biomes add terrain.
 - `map.terrainGrid.SetTerrain(cell, def)` updates plants, snow, and paths,
   and resets the cell's paint, so paint afterwards with `SetTerrainColor`
-  [decomp]. A neighbor's terrain fades onto a cell when the two differ in
-  def or paint, the neighbor is not hard-edged, and the neighbor's render
+  [decomp]. `SetTerrainColor` accepts any terrain and has no DLC check;
+  only the player's paint designator requires `isPaintable` [decomp]. A
+  neighbor's terrain fades onto a cell when the two differ in def or
+  paint, the neighbor is not hard-edged, and the neighbor's render
   precedence is at least the cell's [decomp]. Painted lines stay crisp
   when both colors are painted on a hard-edged floor such as concrete.
 - 1.6 adds foundation and temporary terrain layers, and terrain may glow or
@@ -161,8 +167,9 @@ group, whose hostile occupants form an assault [decomp].
 
 Code that generates structures from a seed should save the seed and the
 obstacles it built around, not the result, and rebuild the plan on load.
-After a load the plan must be the one actually built; one that omitted the
-obstacles restored signs that had been dropped around them [observed].
+After a load the plan must be the one actually built: a plan rebuilt
+without its obstacles brings back parts that were dropped around them,
+which a review caught in one such generator.
 
 ## Review Checklist
 
@@ -185,6 +192,7 @@ obstacles restored signs that had been dropped around them [observed].
 - Ludeon's partial source in the install:
   `Source/Verse/Thing/Building/Building.cs` and
   `Source/Verse/Defs/DefTypes/RoofDef.cs`
-- Vanilla defs: `Data/Core/Defs/ThingDefs_Buildings/` and
-  `Data/Core/Defs/ThingDefs_Items/Items_Resource_Stuff.xml` (stuff
-  affordances)
+- Vanilla defs: `Data/Core/Defs/ThingDefs_Buildings/`,
+  `Data/Core/Defs/ThingDefs_Items/Items_Resource_Stuff.xml` (wood and
+  metal affordances), and `Data/Core/Defs/ThingDefs_Misc/Various_Stone.xml`
+  (stone blocks)

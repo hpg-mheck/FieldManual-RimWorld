@@ -5,7 +5,7 @@ XML definitions, C# assemblies, XML patches, or the art and text the game
 loads. It gives the mental model and the working rules. Load the API
 companion for the subsystem in hand before writing code against it.
 
-Source review: 2026-10-13, against RimWorld 1.6.4871.
+Reviewed: 2026-10-14, against RimWorld 1.6.4871.
 
 Evidence marks: **[decomp]** means verified only by decompiling
 `Assembly-CSharp.dll` from RimWorld 1.6.4871. **[observed]** means seen in
@@ -156,15 +156,18 @@ Target .NET Framework 4.7.2, reference `Assembly-CSharp.dll` and the Unity
 modules you use from `RimWorldWin64_Data/Managed` in the install with
 `Private=false`, and build into `Assemblies/`. Never hard-code the install
 location: read it from an environment variable such as `RIMWORLD_DIR`, and
-fail the build with a clear message when it is unset. The
+fail the build with a clear message when it is unset. FieldManual
+`knacks/dotnet/net-framework-builds.knack/` explains the general pattern;
+the
 [tooling overview](../rimworld-tooling.knack/rimworld-tooling.overview.knack.md)
-has a project template.
+has a RimWorld project template.
 
 ## Verify, Don't Guess
 
 The game's API is large and changes between versions, and plausible names
-are often wrong. There is no `Flick` work type (flicking is `BasicWorker`
-work; `Flick` is a job and a designation). In 1.6, `ThingCategoryDefOf` has
+are often wrong. There is no `Flick` work type: flicking is a work giver
+named `Flick` under `BasicWorker`, beside a job and a designation of the
+same name. In 1.6, `ThingCategoryDefOf` has
 no `FoodMeals` field although the def still exists (declare your own DefOf
 for it), `FireUtility.TryStartFireIn` requires an instigator,
 `WorkGiverDef.equivalenceGroup` is a def reference,

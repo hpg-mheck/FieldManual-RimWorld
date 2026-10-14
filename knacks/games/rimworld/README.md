@@ -1,6 +1,6 @@
 # RimWorld Knacks
 
-Reviewed: 2026-10-13, against RimWorld 1.6.4871 with all five DLCs.
+Reviewed: 2026-10-14, against RimWorld 1.6.4871 with all five DLCs.
 
 These knacks cover building, testing, and demonstrating RimWorld 1.6 mods:
 XML definitions, C# against the game's assembly, XML patches, in-game test
@@ -67,8 +67,24 @@ do not describe 1.5 or earlier, and the 1.7 beta was not reviewed.
 - [Capture and Cues](rimworld-showcases.knack/rimworld-showcases.api.capture-and-cues.knack.md)
   — viewing preferences, maximizing, log cues, screen capture
 
-The showcase fileset describes a hand-built approach and will be revised
-when a dedicated showcase API exists.
+The showcase fileset documents the current hand-built approach: a showcase
+mode of the mod's own test runner, started from the command line. It will
+be revised when the planned showcase API exists, which adds a Showcases
+button to the main menu listing mods, their showcases, and each one's
+details, with warnings about mods flagged as interfering.
+
+## Stock Knacks This Pack Builds On
+
+These knacks keep only what RimWorld adds. Load the general knack first
+when the work goes beyond RimWorld's specifics. Paths are inside a
+FieldManual checkout, written as FieldManual `knacks/<path>`:
+
+| Fileset | Stock knacks |
+|---|---|
+| Modding | `knacks/dotnet/net-framework-builds.knack/` |
+| Testing | `knacks/software-engineering/testing/in-host-smoke-testing.knack/`, `knacks/AI/agent-orchestration/proving-checks-can-fail.knack/`, `knacks/dotnet/netstandard-shared-library.knack/`, `knacks/games/steam.knack/`, `knacks/windows/processes-and-files.knack/` |
+| Tooling | `knacks/dotnet/net-framework-builds.knack/`, `knacks/dotnet/visual-studio.knack/`, `knacks/dotnet/closed-assembly-inspection.knack/`, `knacks/windows/agent-shells.knack/`, `knacks/games/steam.knack/` |
+| Showcases | `knacks/software-engineering/demonstrations/directed-showcases.knack/`, `knacks/windows/desktop-automation.knack/` |
 
 ## Load Order
 
@@ -88,8 +104,11 @@ rest:
 
 - **[decomp]** — verified only by decompiling `Assembly-CSharp.dll` from
   RimWorld 1.6.4871. Re-check after a game update.
-- **[observed]** — seen in game testing on 1.6.4871, not traced to a
-  published source.
+- **[observed]** — seen in game testing or tool use on 1.6.4871, not
+  traced to a published source.
+
+Unmarked claims rest on those sources, or are design advice that follows
+from marked facts.
 
 Examples use a fictional mod, "Brass Works" (`ExampleAuthor.BrassWorks`,
 prefix `BW_`).

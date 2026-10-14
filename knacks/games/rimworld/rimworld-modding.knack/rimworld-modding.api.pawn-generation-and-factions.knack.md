@@ -7,7 +7,7 @@ that must stay calm and harmless, or relies on faction relations. Think
 trees, lords, and fleeing are in
 [Pawns and AI](rimworld-modding.api.pawns-and-ai.knack.md).
 
-Source review: 2026-10-13, against RimWorld 1.6.4871. Evidence marks:
+Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
 1.6.4871; **[observed]** means seen in game testing on 1.6.4871 but not
 traced to a published source.
@@ -66,12 +66,15 @@ A `[DefOf]` field whose name matches a def of another type needs
   killing, or stripping its members changes no relation and sends no
   goodwill message [decomp]. That suits test fixtures, set dressing, and
   scripted townsfolk.
-- Death letters are sent only for pawns of the player's faction or hosted
-  by it [decomp].
+- A death is announced only for pawns of the player's faction (a letter)
+  or hosted by it, such as prisoners (a message); other factions' deaths
+  pass silently [decomp].
 - Ancients have `rescueesCanJoin`, so a rescued member may join the
   colony. Code that later removes "its" pawns must check the faction at
   removal time and leave prisoners, slaves, and recruits alone [observed].
-- Raiders are hostile to the Ancients and will attack them.
+- Factions defined as permanent or natural enemies, such as pirates,
+  start hostile to the Ancients and attack them; other factions start
+  neutral to them, even while at war with the player [decomp].
 
 ## Needs, Moods, and Breaks
 
@@ -89,8 +92,9 @@ A `[DefOf]` field whose name matches a def of another type needs
   `blocksMentalBreaks`, `pctAllThoughtNullification` 1, a fixed
   `overrideMoodBase`, and, if they must not need feeding,
   `hungerRateFactor` 0. Blocked breaks also block that panic flee, as do
-  `mindState.mentalStateHandler.neverFleeIndividual` and a flee threshold of
-  -1 to -1 [decomp].
+  `mindState.mentalStateHandler.neverFleeIndividual`,
+  `mindState.canFleeIndividual` false, and a flee threshold of -1 to -1
+  [decomp].
 
 ## Custom Races
 

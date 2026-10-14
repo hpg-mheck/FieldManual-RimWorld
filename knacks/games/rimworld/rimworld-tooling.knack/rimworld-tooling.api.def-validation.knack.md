@@ -4,20 +4,24 @@ Load this companion after the
 [RimWorld tooling overview](rimworld-tooling.overview.knack.md) when
 building or extending a validator that checks a mod's `Defs/` and
 `Patches/` against the game's real types, without launching the game.
+The general technique, validating a plugin's data files against a closed
+host's types, is in FieldManual
+`knacks/dotnet/closed-assembly-inspection.knack/`; this companion gives
+RimWorld's loader rules and shapes.
 
-Source review: 2026-10-13, against RimWorld 1.6.4871. Evidence marks:
+Reviewed: 2026-10-14, against RimWorld 1.6.4871. Evidence marks:
 **[decomp]** means verified only by decompiling `Assembly-CSharp.dll` from
 1.6.4871; **[observed]** means seen on 1.6.4871 but not traced to a
 published source.
 
 ## Purpose and Limits
 
-A launch takes minutes and reports XML problems among hundreds of log
-lines. A validator that reflects over the game's assembly and the mod's
-own assembly catches the common mistakes in seconds: a misspelled field, an
-enum value that does not parse, a class that does not exist, a reference
-to a missing def, a texture that is not there, a patch whose XPath selects
-nothing.
+A launch takes a minute or more and reports XML problems among hundreds
+of log lines. A validator that reflects over the game's assembly and the
+mod's own assembly catches the common mistakes in seconds: a misspelled
+field, an enum value that does not parse, a class that does not exist, a
+reference to a missing def, a texture that is not there, a patch whose
+XPath selects nothing.
 
 It is a stand-in, not the loader. It cannot run `ConfigErrors()`, resolve
 every custom parser, or see what other mods change; the in-game smoke run
@@ -47,7 +51,8 @@ Mirror the loader's rules [decomp]:
 - a namespace-qualified name resolves directly, mod types first;
 - a short name resolves only among the game's own namespaces (`Verse`,
   `RimWorld`, `Verse.AI`, `Verse.AI.Group`, `RimWorld.Planet`, and a few
-  others), so a mod class written without its namespace is an error;
+  others) and types in no namespace, so a mod class written without its
+  namespace is an error;
 - a def element's name is its type.
 
 ## Checking Elements Against Fields
@@ -110,13 +115,12 @@ failed the validator [observed].
 
 ## Implementation Notes
 
-- Load XML with `XmlDocument.Load`, which honors the file's declared
-  encoding.
-- In PowerShell, use `.LocalName` for element names; `.Name` returns a
-  `Name="..."` attribute when one exists.
-- On Windows PowerShell 5.1, `GetTypes()` throws for some 1.6 types; use
-  the exception's `Types`. PowerShell 7 loaded them all on 1.6.4871
-  [observed].
+- The PowerShell traps (`.LocalName` versus `.Name`, partial type loads
+  on Windows PowerShell 5.1) are in the
+  [tooling overview](rimworld-tooling.overview.knack.md) and the stock
+  closed-assembly-inspection knack.
+- Report a missing class as fatal: it drops the whole def in game (see
+  [Defs and XML](../rimworld-modding.knack/rimworld-modding.api.defs-and-xml.knack.md)).
 - Print each problem with a path from the def down to the element, such
   as `BW_SteamPress/comps/li[CompProperties_PressureGauge]/<maxPresure>`
   (with the class's full name in practice), and a summary count last.
@@ -143,3 +147,5 @@ failed the validator [observed].
   <https://learn.microsoft.com/en-us/dotnet/api/system.reflection.reflectiontypeloadexception>
 - [RimWorld Defs and XML](../rimworld-modding.knack/rimworld-modding.api.defs-and-xml.knack.md)
   for the loader rules being mirrored
+- FieldManual `knacks/dotnet/closed-assembly-inspection.knack/`, for
+  validating data files against host types in general
