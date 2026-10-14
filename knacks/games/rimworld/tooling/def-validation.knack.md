@@ -127,6 +127,28 @@ failed the validator [observed].
 - Re-run the validator after every game update. New fields and renamed
   ones appear first here.
 
+## Running It in Every Build
+
+Run the validator as a post-build step, not only by hand. An unresolvable
+`Class=` builds cleanly and then silently drops the whole def when the game
+loads [observed], so a check that waits for a launch finds it late, among
+hundreds of log lines, or not at all.
+
+- Hook a target after `Build` in the mod's project that runs the validator
+  against the assembly just built (`$(TargetPath)`), so Debug and Release
+  builds each check their own output.
+- Fail the build on a nonzero exit, and print each problem in MSBuild's
+  canonical error form, `<file>: error <CODE>: <message>`, so it appears
+  in the build's error list and in an IDE's error window.
+- Offer an opt-out property for quick iterations
+  (`-p:SkipDefValidation=true`), and keep the step cheap: a few seconds
+  against the game's assembly is typical.
+- Prove the step with a broken input, such as a misspelled `Class=`, and
+  confirm the build fails.
+
+FieldManual's `knacks/dotnet/framework-builds/` covers the MSBuild side of
+the pattern in general.
+
 ## Review Checklist
 
 - Does the validator load both assemblies and survive partial type loads?
@@ -135,6 +157,7 @@ failed the validator [observed].
 - Are custom-parsed shapes handled or visibly skipped?
 - Does every XPath have to match, and is added content type-checked?
 - Was each check proved by a broken input?
+- Does every build run it, and does a problem fail the build?
 
 ## Further Information
 
