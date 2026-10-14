@@ -108,9 +108,12 @@ field's declared type, as in the comp example above. Resolution rules
 - A mod's types need their namespace-qualified name:
   `BrassWorks.CompProperties_PressureGauge`.
 - With 1.6's default loader, a class that cannot be found **drops the whole
-  def**: the log shows "Exception loading def from file ..." with "Could
-  not find type named ..." inside it, and the def never reaches the
-  database, so everything that refers to it fails to resolve.
+  def** [observed, 1.6.4871]: the log shows "Exception loading def from
+  file ...: System.ArgumentException: Could not find type named ... from
+  node <li Class=...>", thrown in `DirectXmlToObjectNew.ResolveTypeForNode`.
+  The def never reaches the database, so everything that refers to it then
+  fails with "Could not resolve cross-reference: No Verse.ThingDef named
+  ...".
 - Under `-legacy-xml-deserializer`, the old loader instead logs "Could not
   find type named ..." and *falls back to the declared type*, so the def
   loads and silently behaves like vanilla. Treat either error as fatal in

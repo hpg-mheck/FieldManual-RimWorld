@@ -38,7 +38,7 @@ Much of what can go wrong in a RimWorld mod is invisible until the game
 runs it:
 
 - XML that names a missing field logs an error and skips the element, and
-  a missing class drops the whole def [decomp];
+  a missing class drops the whole def [observed];
 - configuration errors are computed only after every def has loaded, and
   only when dev mode is on [decomp];
 - behavior depends on the map, the active DLCs, other mods, and dozens of
